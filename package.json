@@ -7,9 +7,10 @@
     "scripts": {
         "test": "npm test",
         "start": "electron main.js",
-        "watch": "watchify src/app.js  -t browserify-css -t babelify --presets [ es2015 react ] -o public/js/bundle.js --debug --verbose"
+        "watch": "watchify src/app.js  -t browserify-css -t babelify --presets [ es2015 react  ] -o public/js/bundle.js --debug --verbose"
     },
     "dependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.13.0",
         "babelify": "^10.0.0",
         "bootstrap": "^4.6.0",
         "classnames": "^2.2.6",
@@ -26,6 +27,9 @@
         "presets": [
             "@babel/env",
             "@babel/react"
+        ],
+        "plugins" : [
+            "@babel/plugin-proposal-class-properties"
         ]
     },
     "browserify-css": {
