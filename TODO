@@ -1,5 +1,9 @@
+Fix errors
 create function which calculates values
 Improve Visualize component
-
+ * 100% wsize
+ * edges
+ * add interactive sidebar on side
+Use bootstrap forms and tables in DataForm
 Implement algorithm
 Test algorithm

@@ -109,6 +109,7 @@ class DataForm extends React.Component {
                     <div id={"a"}>
                         <form>
                             <table style={{"width": "100%"}}>
+                                <tbody>
                                 {
                                     this.state.list.map((value, index) => {
                                         const list = value.map((innerValue, innerIndex) => {
@@ -123,15 +124,18 @@ class DataForm extends React.Component {
                                         })
                                         return <tr>
                                             {list}
-                                            <input
-                                                name={"c_" + index}
-                                                value={this.state.c[index]}
-                                                onChange={e => this.change(e)}
-                                                type="number" step="0.0001"
-                                            />
+                                            <td>
+                                                <input
+                                                    name={"c_" + index}
+                                                    value={this.state.c[index]}
+                                                    onChange={e => this.change(e)}
+                                                    type="number" step="0.0001"
+                                                />
+                                            </td>
                                         </tr>
                                     })
                                 }
+                                </tbody>
                             </table>
                         </form>
                     </div>
