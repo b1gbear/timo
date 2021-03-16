@@ -165,7 +165,7 @@ class App extends React.Component {
                             <Results results={this.state.resultsParsed} c={this.state.c}></Results>
                         </Tab.Pane>
                         <Tab.Pane eventKey="visualize" title="Wizualizacja" style={{"height": "100%"}}>
-                            <Visualize chart={this.state.tree}></Visualize>
+                            <Visualize tree={this.state.tree}></Visualize>
                         </Tab.Pane>
                     </Tab.Content>
 
