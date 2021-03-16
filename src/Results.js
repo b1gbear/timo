@@ -9,6 +9,10 @@ class Results extends React.Component {
 
 
     render() {
+        if (this.props.results === undefined){
+            console.error("Results Component: results are not array")
+            return <div></div>
+        }
         return (
 
             <Table striped bordered hover>

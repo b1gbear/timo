@@ -1,13 +1,47 @@
 @import url("node_modules/bootstrap/dist/css/bootstrap.css");
 
 .box {
-  display: flex;
-}
-.a {
-  flex-grow: 100;
+    display: flex;
 }
 
-.b{
-  width:10rem;
-  min-width:10rem;
+.a {
+    flex-grow: 100;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#root {
+    height: 100%
+}
+
+.b {
+    width: 10rem;
+    min-width: 10rem;
+}
+
+.outer {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    background-color: #131322;
+}
+
+.tabNav {
+    background-color: #c42c2c;
+}
+
+.tabContent {
+    flex-grow: 1;
+    background-color: #21c155;
+}
+
+#treecont {
+    background-color: #555555;
+    height: 100%;
+    min-height: 100%;
 }

@@ -1,37 +1,43 @@
-import { Graph } from "react-d3-graph";
 import React from "react";
-import Table from "react-bootstrap/Table";
+import Tree from 'react-d3-tree';
 
-// graph payload (with minimalist structure)
-const data = {
-  nodes: [{ id: "Harry" }, { id: "Sally" }, { id: "Alice" }],
-  links: [
-    { source: "Harry", target: "Sally" },
-    { source: "Harry", target: "Alice" },
-  ],
+// This is a simplified example of an org chart with a depth of 2.
+// Note how deeper levels are defined recursively via the `children` property.
+const orgChart = {
+    name: 'CEO',
+    children: [
+        {
+            name: 'Manager',
+            attributes: {
+                department: 'Production',
+            },
+            children: [
+                {
+                    name: 'Foreman',
+                    attributes: {
+                        department: 'Fabrication',
+                    },
+                    children: [
+                        {
+                            name: 'Worker',
+                        },
+                    ],
+                },
+                {
+                    name: 'Foreman',
+                    attributes: {
+                        department: 'Assembly',
+                    },
+                    children: [
+                        {
+                            name: 'Worker',
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
 };
-
-// the graph configuration, just override the ones you need
-const myConfig = {
-  nodeHighlightBehavior: true,
-  node: {
-    color: "lightgreen",
-    size: 120,
-    highlightStrokeColor: "blue",
-  },
-  link: {
-    highlightColor: "lightblue",
-  },
-};
-
-const onClickNode = function(nodeId) {
-  window.alert(`Clicked node ${nodeId}`);
-};
-
-const onClickLink = function(source, target) {
-  window.alert(`Clicked link between ${source} and ${target}`);
-};
-
 
 
 class Visualize extends React.Component {
@@ -43,13 +49,10 @@ class Visualize extends React.Component {
 
     render() {
         return (
-            <Graph
-              id="graph-id" // id is mandatory
-              data={data}
-              config={myConfig}
-              onClickNode={onClickNode}
-              onClickLink={onClickLink}
-            />
+            <div id={"treecont"}>
+                <Tree data={orgChart}/>
+
+            </div>
         )
     }
 }
