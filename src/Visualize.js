@@ -37,7 +37,6 @@ const onClickLink = function(source, target) {
 class Results extends React.Component {
     constructor(props) {
         super(props);
-
         this.results = [[1, 2, 3], [3, 4, 5], [6, 7, 8]]
     }
 

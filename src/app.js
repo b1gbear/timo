@@ -13,7 +13,18 @@ import Visualize from "./Visualize";
 var css = require('./app.css');
 
 class App extends React.Component {
+    formChangeHook = (list,c) => {
+        console.log("formChangeHook()")
+        console.log(list,c)
+    };
 
+    calculateHook = () => {
+        console.log("calculateHook()")
+    };
+
+    clearHook = () => {
+        console.log("clearHook()")
+    };
 
     render() {
         return (
@@ -21,7 +32,12 @@ class App extends React.Component {
 
                 <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="Podaj Dane">
-                        <DataForm></DataForm>
+                        <DataForm
+                            onChange={(e,c) => this.formChangeHook(e,c)}
+                            onCalculate={() => this.calculateHook()}
+                            onClear={() => this.clearHook()}
+                        >
+                        </DataForm>
                     </Tab>
                     <Tab eventKey="profile" title="Wynik">
                         <Results></Results>

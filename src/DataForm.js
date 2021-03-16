@@ -2,8 +2,8 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 
 class DataForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
             "c": [1, 2, 3]
@@ -22,24 +22,28 @@ class DataForm extends React.Component {
         if ("coeff" === name) {
             const rowIndex = parseInt(res[1])
             const colIndex = parseInt(res[2])
-            console.log("chan cofe22")
+            console.log("chan casdofe22")
             const num = parseFloat(e.target.value.replace(",", "."))
             if (!isNaN(num)) {
                 this.setState(state => {
                     return state.list[rowIndex][colIndex] = num
                 })
+                this.props.onChange(this.state.list, this.state.c)
             }
 
-        } else if ("c" === "name") {
+        } else if ("c" === name) {
             console.log("chan sdf2dcofe")
 
             const rowIndex = parseInt(res[1])
             const num = parseFloat(e.target.value.replace(",", "."))
 
             if (!isNaN(num)) {
+                console.log(`Change c of ${rowIndex} to ${num}`)
                 this.setState(state => {
-                    return state.c[rowIndex] = num
+                    state.c[rowIndex] = num
+                    return state
                 })
+                this.changeHook(this.state)
             }
 
         }
@@ -71,6 +75,7 @@ class DataForm extends React.Component {
                     }
                     return state
                 })
+
                 break;
             case 'col_inc':
                 this.setState(state => {
@@ -92,8 +97,9 @@ class DataForm extends React.Component {
                 break;
             default:
                 console.error(`Unknown argument ${name}`);
+                return
         }
-
+        this.changeHook(this.state)
     }
 
     render() {
@@ -138,11 +144,31 @@ class DataForm extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
-                <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
+                <div>
+                    <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
+                    <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
+                </div>
+                <div>
+                    <Button onClick={() => this.calculateHook()}>Oblicz</Button>
+                    <Button onClick={() => this.clearHook()}>Wyczysc</Button>
+                </div>
             </div>
         )
     }
+
+    changeHook(state) {
+        console.log("relstate: ", state)
+        console.log("statec: ", state.c)
+        this.props.onChange(state.list, state.c)
+    }
+
+    calculateHook = () => {
+        this.props.onCalculate()
+    };
+
+    clearHook = () => {
+        this.props.onClear()
+    };
 }
 
 export default DataForm
