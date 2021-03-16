@@ -34,7 +34,7 @@ const onClickLink = function(source, target) {
 
 
 
-class Results extends React.Component {
+class Visualize extends React.Component {
     constructor(props) {
         super(props);
         this.results = [[1, 2, 3], [3, 4, 5], [6, 7, 8]]
@@ -54,6 +54,6 @@ class Results extends React.Component {
     }
 }
 
-export default Results
+export default Visualize
 
 
