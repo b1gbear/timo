@@ -3,10 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 class DataForm extends React.Component {
-         state = {
-             "list":[[1, 2, 3], [3, 4, 5], [6, 7, 8]],
-             "c": [1, 2, 3]
-         }
+    state = {
+        "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
+        "c": [1, 2, 3]
+    }
+
     constructor(props) {
         super(props);
         this.changeHook(this.state)
@@ -16,15 +17,12 @@ class DataForm extends React.Component {
         console.log({
             [e.target.name]: e.target.value
         })
-
         const res = e.target.name.split("_");
-        console.log(res)
-
         const name = res[0]
         if ("coeff" === name) {
             const rowIndex = parseInt(res[1])
             const colIndex = parseInt(res[2])
-            console.log("chan casdofe22")
+
             const num = parseFloat(e.target.value.replace(",", "."))
             if (!isNaN(num)) {
                 this.setState(state => {
@@ -32,13 +30,9 @@ class DataForm extends React.Component {
                 })
                 this.props.onChange(this.state.list, this.state.c)
             }
-
         } else if ("c" === name) {
-            console.log("chan sdf2dcofe")
-
             const rowIndex = parseInt(res[1])
             const num = parseFloat(e.target.value.replace(",", "."))
-
             if (!isNaN(num)) {
                 console.log(`Change c of ${rowIndex} to ${num}`)
                 this.setState(state => {
@@ -47,9 +41,7 @@ class DataForm extends React.Component {
                 })
                 this.changeHook(this.state)
             }
-
         }
-
     }
 
     formChange = e => {
@@ -114,7 +106,6 @@ class DataForm extends React.Component {
                 <th>c</th>
             </tr>
             </thead> : null
-
 
         return (
             <div>

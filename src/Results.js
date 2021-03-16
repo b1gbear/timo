@@ -9,9 +9,9 @@ class Results extends React.Component {
 
 
     render() {
-        if (this.props.results === undefined){
+        if (this.props.results === undefined) {
             console.error("Results Component: results are not array")
-            return <div></div>
+            return <div/>
         }
         return (
 

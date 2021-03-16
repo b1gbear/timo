@@ -8,10 +8,49 @@ import ReactDOM from 'react-dom';
 
 var css = require('./app.css');
 
+const TREE = {
+    name: 'CEO',
+    children: [
+        {
+            name: 'Manager',
+            attributes: {
+                department: 'Production',
+            },
+            children: [
+                {
+                    name: 'Foreman',
+                    attributes: {
+                        department: 'Fabrication',
+                    },
+                    children: [
+                        {
+                            name: 'Worker',
+                        },
+                    ],
+                },
+                {
+                    name: 'Foreman',
+                    attributes: {
+                        department: 'Assembly',
+                    },
+                    children: [
+                        {
+                            name: 'Worker',
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+};
+
 class App extends React.Component {
     state = {
         results: [],
-        c: []
+        c: [],
+        activeKey: "input",
+        resultsActive: false,
+        tree : null
     }
 
     createResultsParsed = (list, c) => {
@@ -42,7 +81,8 @@ class App extends React.Component {
 
     formChangeHook = (list, c) => {
         console.log("formChangeHook()")
-        console.log(list, c)
+        console.log("list: ",list, c)
+        console.log("c: ", c)
 
         // All code below is to prepare Results table
         const resultsParsed = this.createResultsParsed(this.deepcopy(list), this.deepcopy(c))
@@ -50,38 +90,70 @@ class App extends React.Component {
         this.setState({
             results: list,
             resultsParsed: resultsParsed,
-            c: c
+            c: c,
         })
     };
 
     calculateHook = () => {
         console.log("calculateHook()")
+
+
+
+        this.setState({
+            "activeKey": "results",
+            resultsActive: true,
+            tree: TREE
+        })
     };
 
     clearHook = () => {
         console.log("clearHook()")
+        this.setState({
+            "activeKey": "input",
+            resultsActive: false
+        })
     };
 
+    handleSelect = (e) => {
+        this.setState({
+            "activeKey": e.target.name
+        })
+    }
+
+
     render() {
+        const navInput =
+            <Nav.Item>
+                <Nav.Link active={this.state.activeKey==="input"}
+                          name="input"
+                          disabled={false}
+                          onClick={(e) => this.handleSelect(e)}
+                >Dane
+                    wejściowe</Nav.Link>
+            </Nav.Item>
+        const navResults =
+            <Nav.Item>
+                <Nav.Link active={this.state.activeKey==="results"}  name="results"  disabled={!this.state.resultsActive}
+                          onClick={(e) => this.handleSelect(e)}
+                >Wynik</Nav.Link>
+            </Nav.Item>
+        const navVisualize =
+            <Nav.Item>
+                <Nav.Link active={this.state.activeKey==="visualize"} name="visualize" disabled={!this.state.resultsActive}
+                          onClick={(e) => this.handleSelect(e)}>Wizualizacja</Nav.Link>
+            </Nav.Item>
         return (
             <div className={"outer"}>
-                <Tab.Container id="left-tabs-example" defaultActiveKey="dataForm">
-
+                <Tab.Container id="left-tabs-example" activeKey={this.state.activeKey}>
                     <div className={"tabNav"}>
-                        <Nav variant={"pills"} >
-                            <Nav.Item >
-                                <Nav.Link eventKey="dataForm">Dane wejściowe</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="results">Wynik</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="visualize">Wizualizacja</Nav.Link>
-                            </Nav.Item>
+                        <Nav variant={"pills"}>
+                            {navInput}
+                            {navResults}
+                            {navVisualize}
                         </Nav>
                     </div>
                     <Tab.Content className={"tabContent"}>
-                        <Tab.Pane eventKey="dataForm" title="Podaj Dane">
+                        <Tab.Pane eventKey="input" title="Podaj Dane">
                             <DataForm
                                 onChange={(e, c) => this.formChangeHook(e, c)}
                                 onCalculate={() => this.calculateHook()}
@@ -93,7 +165,7 @@ class App extends React.Component {
                             <Results results={this.state.resultsParsed} c={this.state.c}></Results>
                         </Tab.Pane>
                         <Tab.Pane eventKey="visualize" title="Wizualizacja" style={{"height": "100%"}}>
-                            <Visualize></Visualize>
+                            <Visualize chart={this.state.tree}></Visualize>
                         </Tab.Pane>
                     </Tab.Content>
 
