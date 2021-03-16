@@ -1,9 +1,13 @@
 @import url("node_modules/bootstrap/dist/css/bootstrap.css");
 
-  #box {
-    display: flex;
-  }
-  #a {
-    flex-grow: 100;
-    border: 1px solid green;
-  }
+.box {
+  display: flex;
+}
+.a {
+  flex-grow: 100;
+}
+
+.b{
+  width:10rem;
+  min-width:10rem;
+}

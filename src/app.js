@@ -13,9 +13,18 @@ import Visualize from "./Visualize";
 var css = require('./app.css');
 
 class App extends React.Component {
+    state = {
+        results: [[1,2,3],[4,5,6],[7,8,9],[7,7,7]],
+        c : [1,2,3]
+    }
+
     formChangeHook = (list,c) => {
         console.log("formChangeHook()")
         console.log(list,c)
+        this.setState({
+            results : list,
+            c : c
+        })
     };
 
     calculateHook = () => {
@@ -40,7 +49,7 @@ class App extends React.Component {
                         </DataForm>
                     </Tab>
                     <Tab eventKey="profile" title="Wynik">
-                        <Results></Results>
+                        <Results results={this.state.results} c={this.state.c}></Results>
                     </Tab>
                     <Tab eventKey="contact" title="Wizualizacja">
                         <Visualize></Visualize>

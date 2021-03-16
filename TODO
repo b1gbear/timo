@@ -1,9 +1,17 @@
-Fix errors
-create function which calculates values
 Improve Visualize component
- * 100% wsize
+ * 100% width and height of tab pane
  * edges
  * add interactive sidebar on side
-Use bootstrap forms and tables in DataForm
-Implement algorithm
-Test algorithm
+ * Add on window resize from other project
+ * Visualize data passing
+
+DataForm
+* Use bootstrap forms and tables in DataForm
+
+Tabs
+* Tabs height = 100%
+
+Algorithm
+* create function which calculates values
+* Implement algorithm
+* Test algorithm

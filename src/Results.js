@@ -4,8 +4,7 @@ import React from "react";
 class Results extends React.Component {
     constructor(props) {
         super(props);
-
-        this.results = [[1, 2, 3], [3, 4, 5], [6, 7, 8]]
+        this.results = props.results
     }
 
 
@@ -15,7 +14,7 @@ class Results extends React.Component {
             <Table striped bordered hover>
                 <thead>
                 {
-                    [this.results[0]].map((value, index) => {
+                    [this.props.results[0]].map((value, index) => {
                         const list = value.map((innerValue, innerIndex) => {
                             return <th> {innerValue} </th>
                         })
@@ -25,7 +24,7 @@ class Results extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    this.results.slice(1).map((value, index) => {
+                    this.props.results.slice(1).map((value, index) => {
                         const list = value.map((innerValue, innerIndex) => {
                             return <td> {innerValue} </td>
                         })

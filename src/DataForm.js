@@ -1,13 +1,15 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 class DataForm extends React.Component {
+         state = {
+             "list":[[1, 2, 3], [3, 4, 5], [6, 7, 8]],
+             "c": [1, 2, 3]
+         }
     constructor(props) {
         super(props);
-        this.state = {
-            "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
-            "c": [1, 2, 3]
-        }
+        this.changeHook(this.state)
     }
 
     change = e => {
@@ -56,7 +58,6 @@ class DataForm extends React.Component {
         switch (name) {
             case 'row_inc':
                 this.setState(state => {
-
                     if (state.list.length === 0) {
                         state.list.push([])
                     }
@@ -75,7 +76,6 @@ class DataForm extends React.Component {
                     }
                     return state
                 })
-
                 break;
             case 'col_inc':
                 this.setState(state => {
@@ -103,18 +103,43 @@ class DataForm extends React.Component {
     }
 
     render() {
+        const head = this.state.list.length !== 0 ?
+            <thead>
+            <tr>
+                {
+                    this.state.list[0].map((value, index) => {
+                        return <th>x<sub>{index + 1}</sub></th>
+                    })
+                }
+                <th>c</th>
+            </tr>
+            </thead> : null
+
+
         return (
             <div>
-                <div id={"box"}>
-                    <div id={"a"}>
-                        <form>
+                <div className={"box"}>
+                    <div className={"a"}>
+                        <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
+                        <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
+                    </div>
+                    <div className={"b"}>
+                        <Button onClick={() => this.calculateHook()}>Oblicz</Button>
+                        <Button onClick={() => this.clearHook()}>Wyczysc</Button>
+                    </div>
+                </div>
+                <div className={"box"}>
+                    <div className={"a"}>
+                        <Form>
                             <table style={{"width": "100%"}}>
+                                {head}
                                 <tbody>
                                 {
                                     this.state.list.map((value, index) => {
                                         const list = value.map((innerValue, innerIndex) => {
                                             return <td key={index + "_" + innerIndex}>
-                                                <input
+                                                <Form.Control
+                                                    style={{"width": "100%", "minWidth  ": "2em"}}
                                                     name={"coeff_" + index + "_" + innerIndex}
                                                     value={this.state.list[index][innerIndex]}
                                                     onChange={e => this.change(e)}
@@ -125,7 +150,8 @@ class DataForm extends React.Component {
                                         return <tr>
                                             {list}
                                             <td>
-                                                <input
+                                                <Form.Control
+                                                    style={{"width": "100%", "minWidth  ": "2em"}}
                                                     name={"c_" + index}
                                                     value={this.state.c[index]}
                                                     onChange={e => this.change(e)}
@@ -137,25 +163,30 @@ class DataForm extends React.Component {
                                 }
                                 </tbody>
                             </table>
-                        </form>
+                        </Form>
                     </div>
-                    <div id={"b"}>
+                    <div className={"b"}>
                         <div>
-                            <Button name={"col_inc"} onClick={e => this.formChange(e)}>Dodaj kolumnę</Button>
+                            <Button
+                                style={{"width": "100%"}}
+                                name={"col_inc"}
+                                onClick={e => this.formChange(e)}
+                            >
+                                Dodaj kolumnę
+                            </Button>
                         </div>
                         <div>
-                            <Button name={"col_dec"} onClick={e => this.formChange(e)}>Usuń kolumnę</Button>
+                            <Button
+                                style={{"width": "100%"}}
+                                name={"col_dec"}
+                                onClick={e => this.formChange(e)}
+                            >
+                                Usuń kolumnę
+                            </Button>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
-                    <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
-                </div>
-                <div>
-                    <Button onClick={() => this.calculateHook()}>Oblicz</Button>
-                    <Button onClick={() => this.clearHook()}>Wyczysc</Button>
-                </div>
+
             </div>
         )
     }
