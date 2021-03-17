@@ -7,7 +7,7 @@ import {Nav} from "react-bootstrap";
 import ReactDOM from 'react-dom';
 
 // noinspection JSUnusedLocalSymbols
-var css = require('./app.css');
+const css = require('./app.css');
 
 const TREE = {
     name: 'CEO',
