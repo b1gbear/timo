@@ -6,6 +6,7 @@ import Visualize from "./Visualize";
 import {Nav} from "react-bootstrap";
 import ReactDOM from 'react-dom';
 
+// noinspection JSUnusedLocalSymbols
 var css = require('./app.css');
 
 const TREE = {
@@ -169,10 +170,10 @@ class App extends React.Component {
                             </DataForm>
                         </Tab.Pane>
                         <Tab.Pane eventKey="results" title="Wynik" style={{"height": "100%"}}>
-                            <Results results={this.state.resultsParsed} c={this.state.c}></Results>
+                            <Results results={this.state.resultsParsed} c={this.state.c}/>
                         </Tab.Pane>
                         <Tab.Pane eventKey="visualize" title="Wizualizacja" style={{"height": "100%"}}>
-                            <Visualize tree={this.state.tree}></Visualize>
+                            <Visualize tree={this.state.tree}/>
                         </Tab.Pane>
                     </Tab.Content>
 

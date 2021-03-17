@@ -13,12 +13,14 @@ class Results extends React.Component {
             console.error("Results Component: results are not array")
             return <div/>
         }
+        // noinspection JSUnusedLocalSymbols
         return (
 
             <Table striped bordered hover>
                 <thead>
                 {
                     [this.props.results[0]].map((value, index) => {
+                        // noinspection JSUnusedLocalSymbols
                         const list = value.map((innerValue, innerIndex) => {
                             return <th> {innerValue} </th>
                         })
@@ -29,6 +31,7 @@ class Results extends React.Component {
                 <tbody>
                 {
                     this.props.results.slice(1).map((value, index) => {
+                        // noinspection JSUnusedLocalSymbols
                         const list = value.map((innerValue, innerIndex) => {
                             return <td> {innerValue} </td>
                         })
