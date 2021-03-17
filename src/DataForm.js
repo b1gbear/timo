@@ -158,7 +158,7 @@ class DataForm extends React.Component {
                                         const list = value.map((innerValue, innerIndex) => {
                                             return <td key={index + "_" + innerIndex}>
                                                 <Form.Control
-                                                    style={{"width": "100%", "minWidth  ": "2em"}}
+                                                    style={{"width": "100%", "minWidth": "2em"}}
                                                     name={"coeff_" + index + "_" + innerIndex}
                                                     value={this.state.list[index][innerIndex]}
                                                     onChange={e => this.change(e)}
@@ -182,7 +182,7 @@ class DataForm extends React.Component {
                                             </td>
                                             <td>
                                                 <Form.Control
-                                                    style={{"width": "100%", "minWidth  ": "2em"}}
+                                                    style={{"width": "100%", "minWidth": "3em"}}
                                                     name={"c_" + index}
                                                     value={this.state.c[index]}
                                                     onChange={e => this.change(e)}
