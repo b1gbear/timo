@@ -127,7 +127,7 @@ class DataForm extends React.Component {
             </thead> : null
 
         return (
-            <div>"
+            <div>
                 <div style={{textAlign: "center", marginTop: "1rem"}}>Proszę podać wzór funkcji oraz ograniczenia a
                     następnie kliknąć przycisk
                     Oblicz</div>
