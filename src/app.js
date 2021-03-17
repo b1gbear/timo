@@ -48,9 +48,11 @@ class App extends React.Component {
     state = {
         results: [],
         c: [],
+        ceq: [],
         activeKey: "input",
         resultsActive: false,
-        tree : null
+        tree: null,
+        fun: ""
     }
 
     createResultsParsed = (list, c) => {
@@ -79,10 +81,12 @@ class App extends React.Component {
         return JSON.parse(JSON.stringify(obj));
     }
 
-    formChangeHook = (list, c) => {
+    formChangeHook = (list, c, ceq, fun) => {
         console.log("formChangeHook()")
-        console.log("list: ",list, c)
+        console.log("list: ", list, c)
         console.log("c: ", c)
+        console.log("ceq: ", ceq)
+        console.log("fun: ", fun)
 
         // All code below is to prepare Results table
         const resultsParsed = this.createResultsParsed(this.deepcopy(list), this.deepcopy(c))
@@ -91,12 +95,13 @@ class App extends React.Component {
             results: list,
             resultsParsed: resultsParsed,
             c: c,
+            ceq: ceq,
+            fun: fun
         })
     };
 
     calculateHook = () => {
         console.log("calculateHook()")
-
 
 
         this.setState({
@@ -124,7 +129,7 @@ class App extends React.Component {
     render() {
         const navInput =
             <Nav.Item>
-                <Nav.Link active={this.state.activeKey==="input"}
+                <Nav.Link active={this.state.activeKey === "input"}
                           name="input"
                           disabled={false}
                           onClick={(e) => this.handleSelect(e)}
@@ -133,13 +138,15 @@ class App extends React.Component {
             </Nav.Item>
         const navResults =
             <Nav.Item>
-                <Nav.Link active={this.state.activeKey==="results"}  name="results"  disabled={!this.state.resultsActive}
+                <Nav.Link active={this.state.activeKey === "results"} name="results"
+                          disabled={!this.state.resultsActive}
                           onClick={(e) => this.handleSelect(e)}
                 >Wynik</Nav.Link>
             </Nav.Item>
         const navVisualize =
             <Nav.Item>
-                <Nav.Link active={this.state.activeKey==="visualize"} name="visualize" disabled={!this.state.resultsActive}
+                <Nav.Link active={this.state.activeKey === "visualize"} name="visualize"
+                          disabled={!this.state.resultsActive}
                           onClick={(e) => this.handleSelect(e)}>Wizualizacja</Nav.Link>
             </Nav.Item>
         return (
@@ -155,7 +162,7 @@ class App extends React.Component {
                     <Tab.Content className={"tabContent"}>
                         <Tab.Pane eventKey="input" title="Podaj Dane">
                             <DataForm
-                                onChange={(e, c) => this.formChangeHook(e, c)}
+                                onChange={this.formChangeHook}
                                 onCalculate={() => this.calculateHook()}
                                 onClear={() => this.clearHook()}
                             >

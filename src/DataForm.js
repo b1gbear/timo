@@ -5,7 +5,8 @@ import Form from 'react-bootstrap/Form';
 class DataForm extends React.Component {
     state = {
         "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
-        "c": [1, 2, 3]
+        "c": [1, 2, 3],
+        "ceq": [false, false, false]
     }
 
     constructor(props) {
@@ -19,14 +20,22 @@ class DataForm extends React.Component {
         })
         const res = e.target.name.split("_");
         const name = res[0]
-        if ("coeff" === name) {
+        if ("fun" === name) {
+            this.setState(state => {
+                state.fun = e.target.value
+                this.changeHook(this.state)
+                return state
+            })
+        } else if ("coeff" === name) {
             const rowIndex = parseInt(res[1])
             const colIndex = parseInt(res[2])
 
             const num = parseFloat(e.target.value.replace(",", "."))
             if (!isNaN(num)) {
                 this.setState(state => {
-                    return state.list[rowIndex][colIndex] = num
+                    state.list[rowIndex][colIndex] = num
+                    this.changeHook(this.state)
+                    return state
                 })
                 this.props.onChange(this.state.list, this.state.c)
             }
@@ -37,10 +46,20 @@ class DataForm extends React.Component {
                 console.log(`Change c of ${rowIndex} to ${num}`)
                 this.setState(state => {
                     state.c[rowIndex] = num
+                    this.changeHook(this.state)
                     return state
                 })
-                this.changeHook(this.state)
             }
+        } else if ("ceq" === name) {
+            const rowIndex = parseInt(res[1])
+            const boolValue = e.target.value
+
+            console.log(`Change ceq of ${rowIndex} to ${boolValue}`)
+            this.setState(state => {
+                state.ceq[rowIndex] = "true" === boolValue
+                this.changeHook(this.state)
+                return state
+            })
         }
     }
 
@@ -108,16 +127,24 @@ class DataForm extends React.Component {
             </thead> : null
 
         return (
-            <div>
-                <div className={"box"}>
+            <div>"
+                <div style={{textAlign:"center", marginTop:"1rem"}}>Proszę podać wzór funkcji oraz ograniczenia a następnie kliknąć przycisk
+                    Oblicz</div>
+                <div className={"box"} style={{marginTop: "2rem", marginBottom: "2rem"}}>
                     <div className={"a"}>
-                        <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
-                        <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
+                        <Form.Control name="fun" type="text" placeholder="Wzór funkcji"
+                                      onChange={e => this.change(e)}
+                                      inline/>
                     </div>
-                    <div className={"b"}>
+                    <div className={"b"} style={{verticalAlign: "text-bottom"}}>
                         <Button onClick={() => this.calculateHook()}>Oblicz</Button>
                         <Button onClick={() => this.clearHook()}>Wyczysc</Button>
                     </div>
+                </div>
+
+                <div>
+                    <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
+                    <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
                 </div>
                 <div className={"box"}>
                     <div className={"a"}>
@@ -140,6 +167,17 @@ class DataForm extends React.Component {
                                         })
                                         return <tr>
                                             {list}
+
+                                            <Form.Control
+                                                as="select"
+                                                name={"ceq_" + index}
+                                                value={this.state.ceq[index]}
+                                                onChange={e => this.change(e)}
+                                            >
+                                                <option value={true}>&le;</option>
+                                                <option value={false}>&ge;</option>
+                                            </Form.Control>
+
                                             <td>
                                                 <Form.Control
                                                     style={{"width": "100%", "minWidth  ": "2em"}}
@@ -185,7 +223,7 @@ class DataForm extends React.Component {
     changeHook(state) {
         console.log("relstate: ", state)
         console.log("statec: ", state.c)
-        this.props.onChange(state.list, state.c)
+        this.props.onChange(state.list, state.c, state.ceq, state.fun)
     }
 
     calculateHook = () => {
