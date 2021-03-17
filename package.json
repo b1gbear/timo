@@ -7,7 +7,7 @@
     "scripts": {
         "test": "npm test",
         "start": "electron main.js",
-        "watch": "watchify src/app.js  -t browserify-css -t babelify --presets [ es2015 react  ] -o public/js/bundle.js --debug --verbose"
+        "watch": "watchify src/App.js  -t browserify-css -t babelify --presets [ es2015 react ] -o public/js/bundle.js --debug --verbose"
     },
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.13.0",
