@@ -128,7 +128,8 @@ class DataForm extends React.Component {
 
         return (
             <div>"
-                <div style={{textAlign:"center", marginTop:"1rem"}}>Proszę podać wzór funkcji oraz ograniczenia a następnie kliknąć przycisk
+                <div style={{textAlign: "center", marginTop: "1rem"}}>Proszę podać wzór funkcji oraz ograniczenia a
+                    następnie kliknąć przycisk
                     Oblicz</div>
                 <div className={"box"} style={{marginTop: "2rem", marginBottom: "2rem"}}>
                     <div className={"a"}>
@@ -167,17 +168,18 @@ class DataForm extends React.Component {
                                         })
                                         return <tr>
                                             {list}
-
-                                            <Form.Control
-                                                as="select"
-                                                name={"ceq_" + index}
-                                                value={this.state.ceq[index]}
-                                                onChange={e => this.change(e)}
-                                            >
-                                                <option value={true}>&le;</option>
-                                                <option value={false}>&ge;</option>
-                                            </Form.Control>
-
+                                            <td>
+                                                <Form.Control
+                                                    style={{"width": "100%", "minWidth": "3.5rem"}}
+                                                    as="select"
+                                                    name={"ceq_" + index}
+                                                    value={this.state.ceq[index]}
+                                                    onChange={e => this.change(e)}
+                                                >
+                                                    <option value={true}>&le;</option>
+                                                    <option value={false}>&ge;</option>
+                                                </Form.Control>
+                                            </td>
                                             <td>
                                                 <Form.Control
                                                     style={{"width": "100%", "minWidth  ": "2em"}}
@@ -194,7 +196,7 @@ class DataForm extends React.Component {
                             </table>
                         </Form>
                     </div>
-                    <div className={"b"}>
+                    <div className={"b"} style={{marginLeft:"1rem"}}>
                         <div>
                             <Button
                                 style={{"width": "100%"}}

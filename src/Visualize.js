@@ -22,7 +22,6 @@ class Visualize extends React.Component {
                 <div style={{"height": "80%", "background-color" : "#555"}}>
                     {this.props.tree && <Tree orientation={"vertical"} data={this.props.tree} onNodeClick={e=>this.onNodeClick(e)}/>}
                 </div>
-                <hr/>
                 <div style={{"height": "20%", "display":"grid", "place-items" : "center"}}>
                     {this.state.e}
                 </div>
