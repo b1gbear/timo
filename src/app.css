@@ -28,11 +28,9 @@ body {
     display: flex;
     flex-flow: column;
     height: 100%;
-    /*background-color: #131322;*/
 }
 
 .tabNav {
-    /*background-color: #c42c2c;*/
 }
 
 .tabContent {
@@ -42,7 +40,6 @@ body {
 }
 
 #treecont {
-    /*background-color: #555555;*/
     height: 100%;
     min-height: 100%;
 }
