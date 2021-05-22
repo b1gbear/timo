@@ -80,14 +80,6 @@ class TwoPhaseSimplex {
         return true
     }
 
-    firstPhaseSimplex = simplexTable => {
-
-    }
-
-    primalSimplexIteration = simplexTable => {
-
-    }
-
     allCoefficientsInFirstRowAboveOrEqualZero = simplexTable => {
         for (let i = 0; i < simplexTable[0].length; i++) {
             if (simplexTable[0][i] < 0)
@@ -96,15 +88,34 @@ class TwoPhaseSimplex {
         return true
     }
 
-    twoPhaseSimplex = () => {
-        let simplexTable = null
+    twoPhaseSimplex = (
+        c_n,
+        b,
+        N
+    ) => {
+        let simplexTable = this.constructSimplexArray(c_n,b,N)
         if (this.allCoefficientsInFirstColumnAboveOrEqualZero(simplexTable)) {
-            this.firstPhaseSimplex()
+            this.firstPhaseSimplex(simplexTable)
         }
-        while (this.allCoefficientsInFirstRowAboveOrEqualZero()) {
+        while (this.allCoefficientsInFirstRowAboveOrEqualZero(simplexTable)) {
             this.primalSimplexIteration(simplexTable)
         }
+        return this.simplexResult(simplexTable)
     }
+
+
+    firstPhaseSimplex = simplexTable => {
+
+    }
+
+    primalSimplexIteration = simplexTable => {
+
+    }
+
+    simplexResult = (simplexTable) => {
+        return undefined;
+    }
+
 }
 
 
