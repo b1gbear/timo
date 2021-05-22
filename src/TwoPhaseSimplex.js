@@ -49,8 +49,8 @@ class TwoPhaseSimplex {
          *  r : number of non-artificial x variables
          *
          */
-        assert(this.math.isNumericVector(c_n),"c_n assertion")
-        assert(this.math.isNumericVector(b),"b assertion")
+        assert(this.math.isNumericVector(c_n), "c_n assertion")
+        assert(this.math.isNumericVector(b), "b assertion")
         assert(this.math.isConsistent2dMatirx(N), "N assertion")
         const s = b.length
         const r = c_n.length
@@ -62,17 +62,17 @@ class TwoPhaseSimplex {
         c_n.forEach((element, index) => {
             matrix[0][1 + index] = element
         })
-        N.forEach( (rowElement,rowIndex) => {
+        N.forEach((rowElement, rowIndex) => {
             rowElement.forEach(
-                (element,index) => {
-                    matrix[rowIndex+1][index+1] = element
+                (element, index) => {
+                    matrix[rowIndex + 1][index + 1] = element
                 }
             )
         })
         return matrix
     }
 
-    allCoefficientsInFirstRowAboveOrEqualZero = simplexTable => {
+    allCoefficientsInFirstColumnAboveOrEqualZero = simplexTable => {
         for (let i = 0; i < simplexTable.length; i++) {
             if (simplexTable[i][0] < 0)
                 return false
@@ -80,7 +80,31 @@ class TwoPhaseSimplex {
         return true
     }
 
+    firstPhaseSimplex = simplexTable => {
 
+    }
+
+    primalSimplexIteration = simplexTable => {
+
+    }
+
+    allCoefficientsInFirstRowAboveOrEqualZero = simplexTable => {
+        for (let i = 0; i < simplexTable[0].length; i++) {
+            if (simplexTable[0][i] < 0)
+                return false
+        }
+        return true
+    }
+
+    twoPhaseSimplex = () => {
+        let simplexTable = null
+        if (this.allCoefficientsInFirstColumnAboveOrEqualZero(simplexTable)) {
+            this.firstPhaseSimplex()
+        }
+        while (this.allCoefficientsInFirstRowAboveOrEqualZero()) {
+            this.primalSimplexIteration(simplexTable)
+        }
+    }
 }
 
 
