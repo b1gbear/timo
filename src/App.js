@@ -103,8 +103,6 @@ class App extends React.Component {
 
     calculateHook = () => {
         console.log("calculateHook()")
-
-
         this.setState({
             "activeKey": "results",
             resultsActive: true,
