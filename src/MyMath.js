@@ -88,18 +88,21 @@ class MyMath {
         return matrix
     }
 
+    NO_SOLUTION = (reason) => {
+        return {"A": null, "B": null, "C": false, "reason": reason}
+    }
 
     ge = (A, B) => {
-        const isize = A.length // Number of rows
+        let isize = A.length // Number of rows
 
-        const NO_SOLUTION = {"A": null, "B": null, "C": false};
+
         for (let outerRowIterator = 0; outerRowIterator < A.length; outerRowIterator++) {
 
             // Find non zero row
             let found = this.findNonZeroRowInMatrix(A, outerRowIterator)
 
             if (found < 0) {
-                return NO_SOLUTION
+                return this.NO_SOLUTION("No non zero-rows available")
             }
 
             // Swap rows
@@ -115,10 +118,32 @@ class MyMath {
             }
         }
 
+        let nonZeroRows = 0
+        for (let outerRowIterator = 0; outerRowIterator < A.length; outerRowIterator++) {
+            nonZeroRows += this.nonZeroRow([...A[outerRowIterator], B[outerRowIterator]]) ? 1 : 0
+            if (this.rowGeContradicts(A[outerRowIterator], B[outerRowIterator])) {
+                return this.NO_SOLUTION("Row is contradictionary")
+            }
+        }
 
-        //
-        // console.error("A", A)
-        // console.error("B", B)
+        let outerRowIterator = isize-1
+        while (outerRowIterator >= 0){
+            if (!this.nonZeroRow([...A[outerRowIterator], B[outerRowIterator]]) ){
+                A.pop()
+                B.pop()
+            }
+            outerRowIterator--
+        }
+        isize = A.length
+
+        // console.error("A",A)
+        // console.error("B",B)
+
+        if (nonZeroRows !== A[0].length) {
+
+            return this.NO_SOLUTION(`Rank does not match number of variable nonZeroRows ${nonZeroRows} length ${A[0].length}`) // matrix rank is not ok
+        }
+        // console.error(`nonZeroRows ${nonZeroRows} length ${A[0].length}`)
         // Iterate upwards from last index to create eye matrix for A
         // and results for B,
         // then multiplication of A*X = X and X = B that means we found solution
@@ -139,7 +164,7 @@ class MyMath {
             A[i][i] = 1
         }
 
-        return {"A": A, "B": B, "C": true, "reason" : null}
+        return {"A": A, "B": B, "C": true, "reason": null}
     }
 
 
@@ -176,6 +201,20 @@ class MyMath {
     }
 
 
+    nonZeroRow(rows) {
+        for (let j = 0; j < rows.length; j++) {
+            const elem = rows[j]
+            if (elem !== 0) {
+                return true
+            }
+        }
+
+        return false;
+    }
+
+    rowGeContradicts(row_a_part, row_b_part) {
+        return !this.nonZeroRow(row_a_part) && this.nonZeroRow([row_b_part]);
+    }
 }
 
 export default MyMath

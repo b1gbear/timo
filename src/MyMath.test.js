@@ -166,6 +166,39 @@ test('ge1', () => {
 });
 
 
+test('ge2', () => {
+    let A = [
+        [1, 1, -3],
+        [2, 1, 1],
+        [1, 1, 1],
+        [1, 2, -3]
+    ]
+    let B = [-1, 1, 3, 1]
+    let C = [null, null, null]
+
+    let delta = 1e-5
+    const sol =  (new MyMath()).ge(A, B)
+    const R = sol.C
+
+
+
+    expect(R).toBeFalsy()
+});
+
+test('ge3', () => {
+    let A=[[-1,2,1], [1,-3,-2],[3,-1,-1]]
+    let B=[-1,-1,4]
+    let C=[2,-1,3]
+
+    let delta = 1e-5
+    const sol =  (new MyMath()).ge(A, B)
+    const R = sol.C
+
+    for (let i = 0; i < R.length; i++) {
+        expect(Math.abs(R[i] - C[i]) < delta).toBeTruthy()
+    }
+});
+
 
 test('ge4', () => {
     let A = [[-1, 2, 1], [1, -3, -2], [3, -1, -1]]
@@ -177,5 +210,21 @@ test('ge4', () => {
     for (let i = 0; i < R.length; i++) {
         expect(Math.abs(R[i] - C[i]) < delta).toBeTruthy()
     }
+});
+
+
+test('ge5', () => {
+    let A = [[2, 3, -3], [3, -1, 1], [1, 1, -2], [3, 2, -2]]
+    let B = [4, 17, 1, 11]
+    let C = [5, 0, 2]
+
+    let delta = 1e-5
+    const r = (new MyMath()).ge(A, B)
+
+    expect(r.C).toBeTruthy()
+    const R = r.B
+
+
+
 });
 
