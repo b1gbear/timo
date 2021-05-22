@@ -39,11 +39,12 @@ class TwoPhaseSimplex {
          * | x_b  | b | N    |
          * +------+---+------+
          *
+         * name     dim    explained               ( type )
          *    b  : [s,1] : constraints wyraz wolny ( scalars )
          *  x_0  : [1,1] : function celu           ( scalar )
          *  x_b  : [s,1] : base variables vector   ( symbols )
          * -x_n  : [1,r] : minus non base x vector ( symbols )
-         *    N  : [s,r] : Non base vector         ( left part of A matrix )
+         *    N  : [s,r] : Non base vector         ( lefts part of A matrix )
          *
          *  s : number of constraints
          *  r : number of non-artificial x variables

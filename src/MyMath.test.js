@@ -223,8 +223,5 @@ test('ge5', () => {
 
     expect(r.C).toBeTruthy()
     const R = r.B
-
-
-
 });
 
