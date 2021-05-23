@@ -52,6 +52,11 @@ class DualSimplex {
         this.onePhase.swapBaseSymbols(fullSimplexTable.top,minCol-1,fullSimplexTable.left,minRow-1)
     }
 
+    simplexResult = (fullSimplexTable) => {
+        const result = this.onePhase.simplexResult(fullSimplexTable)
+        result[0] *= -1
+        return result
+    }
 
     dualSimplex = (
         c_n,
@@ -65,8 +70,16 @@ class DualSimplex {
         }
 
         this.iterateSimplex(fullSimplexTable);
+        console.log(fullSimplexTable)
 
-        return this.onePhase.simplexResult(fullSimplexTable)
+        if (this.onePhase.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
+            for (let i = 0; i < c_n.length; i++) {
+                this.onePhase.primalSimplexIteration(fullSimplexTable)
+                console.log(fullSimplexTable)
+            }
+        }
+
+        return this.simplexResult(fullSimplexTable)
     }
 
 

@@ -10,6 +10,7 @@ function assert(condition, message) {
 
 class OnePhaseSimplex {
     math = new MyMath()
+    epsilon = 1e-3
 
     constructSimplexArray = (
         c_n,
@@ -75,16 +76,16 @@ class OnePhaseSimplex {
 
 
     allCoefficientsInFirstColumnAboveOrEqualZero = simplexTable => {
-        for (let i = 0; i < simplexTable.length; i++) {
-            if (simplexTable[i][0] < 0)
+        for (let i = 1; i < simplexTable.length; i++) {
+            if (simplexTable[i][0] < -this.epsilon)
                 return false
         }
         return true
     }
 
     allCoefficientsInFirstRowAboveOrEqualZero = simplexTable => {
-        for (let i = 0; i < simplexTable[0].length; i++) {
-            if (simplexTable[0][i] < 0)
+        for (let i = 1; i < simplexTable[0].length; i++) {
+            if (simplexTable[0][i] < -this.epsilon)
                 return false
         }
         return true
@@ -165,16 +166,20 @@ class OnePhaseSimplex {
         return result;
     }
 
+    onePhaseSimplexTableBased = (fullSimplexTable) => {
+        while (!this.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
+            this.primalSimplexIteration(fullSimplexTable)
+        }
+        return this.simplexResult(fullSimplexTable)
+    }
+
     onePhaseSimplex = (
         c_n,
         b,
         N
     ) => {
         let fullSimplexTable = this.wrapSimplexArrayAdditionalInfo(c_n, b, N)
-        while (!this.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
-            this.primalSimplexIteration(fullSimplexTable)
-        }
-        return this.simplexResult(fullSimplexTable)
+        return this.onePhaseSimplexTableBased(fullSimplexTable)
     }
 }
 

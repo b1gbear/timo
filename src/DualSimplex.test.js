@@ -127,3 +127,19 @@ test('bad_test_which_requires_function_extraction', () => {
     }
 
 })
+
+
+
+test('bad_test_which_requires_function_extraction', () => {
+
+    const c_n = [1, 1]
+    const b = [-8, -6, -5]
+    const N = [
+        [-1, -2],
+        [-2, -1],
+        [-1, -1]
+    ]
+
+    const result = (new DualSimplex()).dualSimplex(c_n,b,N)
+
+})
