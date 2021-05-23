@@ -122,7 +122,7 @@ class OnePhaseSimplex {
         let minFactor = null
         for ( let row = 1; row < simplexTable.length ; row ++ ){
             const factor = simplexTable[row][0] / simplexTable[row][pivotColumn]
-            if ( minIndex == null || factor < minFactor){
+            if ( (factor > 0) &&  (minIndex == null || factor < minFactor)) {
                 minIndex = row
                 minFactor = factor
             }
@@ -149,23 +149,6 @@ class OnePhaseSimplex {
         this.gaussian_elimination(simplexTable,minRow,minCol,rows,cols)
         this.swapBaseSymbols(fullSimplexTable.top,minCol-1,fullSimplexTable.left,minRow-1)
     }
-
-    onePhaseSimplex = (
-        c_n,
-        b,
-        N
-    ) => {
-        let fullSimplexTable = this.wrapSimplexArrayAdditionalInfo(c_n, b, N)
-        let i = 0
-        while (!this.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
-            this.primalSimplexIteration(fullSimplexTable)
-            console.log(i)
-        }
-
-        return this.simplexResult(fullSimplexTable)
-    }
-
-
 
     gaussian_elimination = (a, exact_row, exact_col, rows, cols) => {
         const b = Utils.copy(a)
@@ -194,6 +177,18 @@ class OnePhaseSimplex {
             result[element] = fullSimplexTable.table[i+1][0]
         }
         return result;
+    }
+
+    onePhaseSimplex = (
+        c_n,
+        b,
+        N
+    ) => {
+        let fullSimplexTable = this.wrapSimplexArrayAdditionalInfo(c_n, b, N)
+        while (!this.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
+            this.primalSimplexIteration(fullSimplexTable)
+        }
+        return this.simplexResult(fullSimplexTable)
     }
 }
 

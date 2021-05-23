@@ -176,7 +176,8 @@ test('simplexResult', () => {
 })
 
 
-test('onePhaseSimplex', () => {
+
+test('primalSimplexIteration', () => {
 
     const N = [
         [1, 1],
@@ -188,9 +189,28 @@ test('onePhaseSimplex', () => {
     const c_n = [-2, -1]
 
 
-    expect((new OnePhaseSimplex()).onePhaseSimplex(c_n, b,N))
-        .toStrictEqual([31/4,11/4,9/4,0,1/2,0])
+    let simplexTable  = (new OnePhaseSimplex()).wrapSimplexArrayAdditionalInfo(c_n,b,N)
+    const result = (new OnePhaseSimplex()).primalSimplexIteration(simplexTable)
+    console.error(simplexTable)
+    // TODO: Add test
+})
 
+test('onePhaseSimplex', () => {
+
+    const N = [
+        [1, 1],
+        [-1, 1],
+        [ 6, 2]
+    ]
+    const b = [5, 0, 21]
+
+    const c_n = [-2, -1]
+
+    const result = (new OnePhaseSimplex()).onePhaseSimplex(c_n, b,N)
+    const expected = [31/4,11/4,9/4,0,1/2,0]
+    for ( let i = 0; i < expected.length ; i ++ ){
+        expect(Math.abs(result[i]-expected[i]) < 1e-3).toBeTruthy()
+    }
 
 })
 
