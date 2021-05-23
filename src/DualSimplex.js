@@ -8,7 +8,7 @@ class DualSimplex {
     math = new MyMath()
 
     allCoefficientsInFirstColumnAboveOrEqualZero(simplexTable) {
-        for (let i = 1 ; i < simplexTable[0].length; i ++){
+        for (let i = 1 ; i < simplexTable.length; i ++){
             if (simplexTable[i][0] < 0){
                 return false
             }
@@ -64,14 +64,17 @@ class DualSimplex {
             return null
         }
 
-        while (!this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)) {
-            this.dualSimplexIteration(fullSimplexTable)
-        }
+        this.iterateSimplex(fullSimplexTable);
 
         return this.onePhase.simplexResult(fullSimplexTable)
     }
 
 
+    iterateSimplex(fullSimplexTable) {
+        while (!this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)) {
+            this.dualSimplexIteration(fullSimplexTable)
+        }
+    }
 }
 
 export default DualSimplex

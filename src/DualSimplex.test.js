@@ -99,6 +99,31 @@ test('dualSimplexIteration', () => {
     )
 })
 
+test('bad_test_which_requires_function_extraction', () => {
+
+    const c_n = [1, 1]
+    const b = [-8, -6, -5]
+    const N = [
+        [-1, -2],
+        [-2, -1],
+        [-1, -1]
+    ]
+
+    let simplexTable = (new OnePhaseSimplex()).wrapSimplexArrayAdditionalInfo(c_n, b, N)
 
 
+    const result = (new DualSimplex()).iterateSimplex(simplexTable)
 
+    const resultNums = (new OnePhaseSimplex()).simplexResult(simplexTable)
+
+    const expected = [-5,2,3,1]
+
+
+    for (let i = 0; i < expected.length; i++) {
+        if ( resultNums[i] !== 0){
+            expect( resultNums[i]).toStrictEqual(expected[i])
+
+        }
+    }
+
+})
