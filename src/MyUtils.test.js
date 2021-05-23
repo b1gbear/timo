@@ -11,3 +11,8 @@ test('range test', () => {
     const b = MyUtils.range(5)
     expect(b).toStrictEqual([0,1,2,3,4])
 });
+
+test('range test for A and B', () => {
+    const b = MyUtils.range(1,5)
+    expect(b).toStrictEqual([1,2,3,4])
+});

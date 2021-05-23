@@ -13,6 +13,7 @@ sąsame wartości dodatnie to zmienne (x3,x4,x5) są rozwiązaniem optymalnym. J
 
  */
 import MyMath from "./MyMath";
+import * as Utils from "./MyUtils";
 
 function assert(condition, message) {
     if (!condition) {
@@ -73,6 +74,21 @@ class TwoPhaseSimplex {
         return matrix
     }
 
+
+    wrapSimplexArrayAdditionalInfo = (
+        c_n,
+        b,
+        N
+
+    ) => {
+        return {
+            "table" : this.constructSimplexArray(c_n,b,N),
+            "top" : Utils.range(c_n.length),
+            "left" : Utils.range(c_n.length,c_n.length+b.length+1)
+        }
+    }
+
+
     allCoefficientsInFirstColumnAboveOrEqualZero = simplexTable => {
         for (let i = 0; i < simplexTable.length; i++) {
             if (simplexTable[i][0] < 0)
@@ -103,25 +119,25 @@ class TwoPhaseSimplex {
         }
         return this.simplexResult(simplexTable)
     }
-/*
-    gaussian_elimination = (a, row, col, rows, cols) => {
-        const b = (this.myUtils).copy()
-        range(rows).forEach( (i) => {
-            range(cols).forEach( (j) => {
-                if (i == row and j == col)
-                    a[i][j] = 1 / b[i, j]
-                }else if ( i == row and j != col ) {
-                    a[i][j] = b[row][j] / b[row][col]
-                }else if ( i != row and j == col ) {
-                    a[i][j] = -b[i][col] / b[row][col]
-                } else {
-                    a[i][j] = b[i][j] - b[i][col] * b[row][j] / b[row][col]
+
+    gaussian_elimination = (a, exact_row, exact_col, rows, cols) => {
+        const b = Utils.copy()
+        Utils.range(rows).forEach( (i) => {
+            Utils.range(cols).forEach( (j) => {
+                if (i === exact_row && j === exact_col) {
+                    a[i][j] = 1 / b[i][j]
+                }else if ( i === exact_row && j !== exact_col ) {
+                    a[i][j] = b[exact_row][j] / b[exact_row][exact_col]
+                }else if ( i !== exact_row && j === exact_col ) {
+                    a[i][j] = -b[i][exact_col] / b[exact_row][exact_col]
+                } else /* any other element not in (col or row) */{
+                    a[i][j] = b[i][j] - b[i][exact_col] * b[exact_row][j] / b[exact_row][exact_col]
                 }
-            }
-        }
+            })
+        })
         return a
     }
-*/
+
 
     firstPhaseSimplex = simplexTable => {
 
