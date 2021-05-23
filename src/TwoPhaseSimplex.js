@@ -105,7 +105,7 @@ class TwoPhaseSimplex {
     }
 /*
     gaussian_elimination = (a, row, col, rows, cols) => {
-        b = a.copy()
+        const b = (this.myUtils).copy()
         range(rows).forEach( (i) => {
             range(cols).forEach( (j) => {
                 if (i == row and j == col)

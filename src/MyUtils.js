@@ -1,13 +1,9 @@
-class MyUtils {
-    copy = obj => {
-        return JSON.parse(JSON.stringify(obj));
-    }
-
-    range = (N) => {
-        return [...Array(N).keys()]
-    }
+export function copy(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
-export default MyUtils
+export function range(N) {
+    return [...Array(N).keys()]
+}
 
 
