@@ -103,7 +103,25 @@ class TwoPhaseSimplex {
         }
         return this.simplexResult(simplexTable)
     }
-
+/*
+    gaussian_elimination = (a, row, col, rows, cols) => {
+        b = a.copy()
+        range(rows).forEach( (i) => {
+            range(cols).forEach( (j) => {
+                if (i == row and j == col)
+                    a[i][j] = 1 / b[i, j]
+                }else if ( i == row and j != col ) {
+                    a[i][j] = b[row][j] / b[row][col]
+                }else if ( i != row and j == col ) {
+                    a[i][j] = -b[i][col] / b[row][col]
+                } else {
+                    a[i][j] = b[i][j] - b[i][col] * b[row][j] / b[row][col]
+                }
+            }
+        }
+        return a
+    }
+*/
 
     firstPhaseSimplex = simplexTable => {
 

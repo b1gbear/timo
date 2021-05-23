@@ -215,6 +215,9 @@ class MyMath {
     rowGeContradicts(row_a_part, row_b_part) {
         return !this.nonZeroRow(row_a_part) && this.nonZeroRow([row_b_part]);
     }
+
+
+
 }
 
 export default MyMath
