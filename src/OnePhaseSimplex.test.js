@@ -110,8 +110,8 @@ test('wrapSimplexArrayAdditionalInfo', () => {
         [6.0, 12.0, 13.0, 14.0, 15.0],
         [7.0, 16.0, 17.0, 18.0, 19.0]
     ])
-    expect(have.left).toStrictEqual([5,6,7])
-    expect(have.top).toStrictEqual([1, 2, 3,4])
+    expect(have.left).toStrictEqual([5, 6, 7])
+    expect(have.top).toStrictEqual([1, 2, 3, 4])
 })
 
 
@@ -164,17 +164,16 @@ test('simplexResult', () => {
             [6.0, 12.0, 13.0, 1.0, 15.0],
             [9.0, 16.0, 17.0, 14.0, 19.0]
         ],
-        "top": [3,4,5,6],
+        "top": [3, 4, 5, 6],
         "left": [1, 2, 5]
     }
 
 
     expect((new OnePhaseSimplex()).simplexResult(simplex_mock))
-        .toStrictEqual([3.0, 7.0, 6.0, 0.0, 0.0, 9.0,0.0,0.0])
+        .toStrictEqual([3.0, 7.0, 6.0, 0.0, 0.0, 9.0, 0.0, 0.0])
 
 
 })
-
 
 
 test('primalSimplexIteration', () => {
@@ -182,17 +181,28 @@ test('primalSimplexIteration', () => {
     const N = [
         [1, 1],
         [-1, 1],
-        [ 6, 2]
+        [6, 2]
     ]
     const b = [5, 0, 21]
 
     const c_n = [-2, -1]
 
 
-    let simplexTable  = (new OnePhaseSimplex()).wrapSimplexArrayAdditionalInfo(c_n,b,N)
+    let simplexTable = (new OnePhaseSimplex()).wrapSimplexArrayAdditionalInfo(c_n, b, N)
     const result = (new OnePhaseSimplex()).primalSimplexIteration(simplexTable)
-    console.error(simplexTable)
-    // TODO: Add test
+    expect(simplexTable).toStrictEqual(
+        {
+            table: [
+                [7, 0.3333333333333333, -0.33333333333333337],
+                [1.5, -0.16666666666666666, 0.6666666666666667],
+                [3.5, 0.16666666666666666, 1.3333333333333333],
+                [3.5, 0.16666666666666666, 0.3333333333333333]
+            ],
+            top: [5, 2],
+            left: [3, 4, 1]
+        }
+    )
+
 })
 
 test('onePhaseSimplex', () => {
@@ -200,20 +210,19 @@ test('onePhaseSimplex', () => {
     const N = [
         [1, 1],
         [-1, 1],
-        [ 6, 2]
+        [6, 2]
     ]
     const b = [5, 0, 21]
 
     const c_n = [-2, -1]
 
-    const result = (new OnePhaseSimplex()).onePhaseSimplex(c_n, b,N)
-    const expected = [31/4,11/4,9/4,0,1/2,0]
-    for ( let i = 0; i < expected.length ; i ++ ){
-        expect(Math.abs(result[i]-expected[i]) < 1e-3).toBeTruthy()
+    const result = (new OnePhaseSimplex()).onePhaseSimplex(c_n, b, N)
+    const expected = [31 / 4, 11 / 4, 9 / 4, 0, 1 / 2, 0]
+    for (let i = 0; i < expected.length; i++) {
+        expect(Math.abs(result[i] - expected[i]) < 1e-3).toBeTruthy()
     }
 
 })
-
 
 
 // primalSimplexIteration
