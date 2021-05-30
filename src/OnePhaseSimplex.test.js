@@ -56,7 +56,7 @@ test('allCoefficientsInFirstRowAboveOrEqualZero', () => {
 
 test('allCoefficientsInFirstRowAboveOrEqualZero', () => {
     expect(
-        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZero([
+        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible([
             [0.0, 1.0, 2.0, 3.0, 4.0],
             [5.0, 1.0, 9.0, 0.0, 1.0],
             [6.0, 1.0, 3.0, 4.0, 5.0],
@@ -64,19 +64,17 @@ test('allCoefficientsInFirstRowAboveOrEqualZero', () => {
         ])
     ).toBeTruthy()
     expect(
-        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZero([
-            [ -5, 1, -0 ],
-            [ 4, -1.9999999999999996, 0.9999999999999998 ],
-            [ 1, 0.9999999999999996, -0.9999999999999998 ],
-            [ 1, -2.9999999999999996, 0.9999999999999998 ]
+        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible([
+            [-5, 1, -0],
+            [4, -1.9999999999999996, 0.9999999999999998],
+            [1, 0.9999999999999996, -0.9999999999999998],
+            [1, -2.9999999999999996, 0.9999999999999998]
         ])
     ).toBeTruthy()
 
 
-
-
     expect(
-        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZero([
+        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible([
             [-1.0, 1.0, 2.0, 3.0, 4.0],
             [5.0, 1.0, 9.0, 0.0, 1.0],
             [6.0, 1.0, 3.0, 4.0, 5.0],
@@ -85,7 +83,7 @@ test('allCoefficientsInFirstRowAboveOrEqualZero', () => {
     ).toBeTruthy()
 
     expect(
-        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZero([
+        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible([
             [-1.0, -1.0, -2.0, -3.0, -4.0],
             [-5.0, 1.0, 9.0, 0.0, 1.0],
             [-6.0, 1.0, 3.0, 4.0, 5.0],
@@ -94,7 +92,7 @@ test('allCoefficientsInFirstRowAboveOrEqualZero', () => {
     ).toBeFalsy()
 
     expect(
-        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZero([
+        (new OnePhaseSimplex()).allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible([
             [0.0, 0.0, 0.0, 0.0, 0.0],
             [-5.0, 1.0, 9.0, 0.0, 1.0],
             [-6.0, 1.0, 3.0, 4.0, 5.0],
@@ -203,6 +201,9 @@ test('primalSimplexIteration', () => {
     const result = (new OnePhaseSimplex()).primalSimplexIteration(simplexTable)
     expect(simplexTable).toStrictEqual(
         {
+            "X": 2,
+            "Y": 3,
+
             table: [
                 [7, 0.3333333333333333, -0.33333333333333337],
                 [1.5, -0.16666666666666666, 0.6666666666666667],
@@ -240,22 +241,21 @@ test('onePhaseSimplex for edge scenario', () => {
     const simplexTable =
         {
             table: [
-                [ -5, 1, 0 ],
-                [ 3, 1, -1 ],
-                [ 2, -2, 1 ],
-                [ 1.0000000000000002, -3, 1.0000000000000002 ]
+                [-5, 1, 0],
+                [3, 1, -1],
+                [2, -2, 1],
+                [1.0000000000000002, -3, 1.0000000000000002]
             ],
-            top: [ 5, 3 ],
-            left: [ 2, 1, 4 ]
+            top: [5, 3],
+            left: [2, 1, 4]
         }
-
 
 
     const result = (new OnePhaseSimplex()).onePhaseSimplexTableBased(simplexTable)
 
-    const expected = [-5,2,3,0,1,0]
+    const expected = [-5, 2, 3, 0, 1, 0]
     for (let i = 0; i < expected.length; i++) {
-        if ( result[i] !== 0 ) {
+        if (result[i] !== 0) {
             expect(Math.abs(result[i] - expected[i]) < 1e-3).toBeTruthy()
 
         }
@@ -263,29 +263,24 @@ test('onePhaseSimplex for edge scenario', () => {
 })
 
 
-
-
 test('primalSimplexIteration', () => {
 
-    const  simplexTable =
+    const simplexTable =
         {
             table: [
-                [ -5, 1, 0 ],
-                [ 3, 1, -1 ],
-                [ 2, -2, 1 ],
-                [ 1, -3, 1 ]
+                [-5, 1, 0],
+                [3, 1, -1],
+                [2, -2, 1],
+                [1, -3, 1]
             ],
-            top: [ 5, 3 ],
-            left: [ 2, 1, 4 ]
+            top: [5, 3],
+            left: [2, 1, 4]
         }
-
 
 
     const result = (new OnePhaseSimplex()).primalSimplexIteration(simplexTable)
     // does not hang
 })
-
-
 
 
 // primalSimplexIteration

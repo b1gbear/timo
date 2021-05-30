@@ -87,7 +87,10 @@ test('dualSimplexIteration', () => {
 
     expect(simplexTable).toStrictEqual(
         {
-            table: [
+           "X": 2,
+          "Y": 3,
+
+        table: [
                 [ -4, 0.5, 0.5 ],
                 [ 4, 0.5, -0.5 ],
                 [ -2, -1.5, -0.5 ],

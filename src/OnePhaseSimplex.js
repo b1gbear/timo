@@ -70,7 +70,9 @@ class OnePhaseSimplex {
         return {
             "table": this.constructSimplexArray(c_n, b, N),
             "top": Utils.range(1, c_n.length + 1),
-            "left": [...Utils.range(c_n.length + 1, c_n.length + 1 + b.length)]
+            "left": [...Utils.range(c_n.length + 1, c_n.length + 1 + b.length)],
+            "X" : c_n.length,
+            "Y" : b.length
         }
     }
 
@@ -83,7 +85,7 @@ class OnePhaseSimplex {
         return true
     }
 
-    allCoefficientsInFirstRowAboveOrEqualZero = simplexTable => {
+    allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible = simplexTable => {
         for (let i = 1; i < simplexTable[0].length; i++) {
             if (simplexTable[0][i] < -this.epsilon)
                 return false
@@ -167,7 +169,7 @@ class OnePhaseSimplex {
     }
 
     onePhaseSimplexTableBased = (fullSimplexTable) => {
-        while (!this.allCoefficientsInFirstRowAboveOrEqualZero(fullSimplexTable.table)) {
+        while (!this.allCoefficientsInFirstRowAboveOrEqualZeroSoIsFeasible(fullSimplexTable.table)) {
             this.primalSimplexIteration(fullSimplexTable)
         }
         return this.simplexResult(fullSimplexTable)
