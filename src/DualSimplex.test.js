@@ -87,17 +87,17 @@ test('dualSimplexIteration', () => {
 
     expect(simplexTable).toStrictEqual(
         {
-           "X": 2,
-          "Y": 3,
+            "X": 2,
+            "Y": 3,
 
-        table: [
-                [ -4, 0.5, 0.5 ],
-                [ 4, 0.5, -0.5 ],
-                [ -2, -1.5, -0.5 ],
-                [ -1, -0.5, -0.5 ]
+            table: [
+                [-4, 0.5, 0.5],
+                [4, 0.5, -0.5],
+                [-2, -1.5, -0.5],
+                [-1, -0.5, -0.5]
             ],
-            top: [ 1, 3 ],
-            left: [ 2, 4, 5 ]
+            top: [1, 3],
+            left: [2, 4, 5]
         }
     )
 })
@@ -119,18 +119,17 @@ test('bad_test_which_requires_function_extraction', () => {
 
     const resultNums = (new OnePhaseSimplex()).simplexResult(simplexTable)
 
-    const expected = [-5,2,3,1]
+    const expected = [-5, 2, 3, 1]
 
 
     for (let i = 0; i < expected.length; i++) {
-        if ( resultNums[i] !== 0){
-            expect( resultNums[i]).toStrictEqual(expected[i])
+        if (resultNums[i] !== 0) {
+            expect(resultNums[i]).toStrictEqual(expected[i])
 
         }
     }
 
 })
-
 
 
 test('bad_test_which_requires_function_extraction', () => {
@@ -143,6 +142,61 @@ test('bad_test_which_requires_function_extraction', () => {
         [-1, -1]
     ]
 
-    const result = (new DualSimplex()).dualSimplex(c_n,b,N)
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
 
 })
+
+
+
+test('Przypadek 1', () => {
+
+    const c_n = [1, 6]
+    const b = [-2, 3]
+    const N = [[-2, -1], [-1, 1]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    console.error(result.x)
+    expect(result.description).toStrictEqual(1)
+
+})
+
+
+test('Przypadek 1', () => {
+    // const c_n = [2, 1]
+    // const b = [1, 2]
+    // const N = [[1, 2], [1, 1]]
+    // Minimum w punkcie 1 0
+    const c_n = [1, 1]
+    const b = [-7, -7]
+    const N = [[-2, -1], [-1, -2]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    console.error(result.x)
+    expect(result.description).toStrictEqual(1)
+    // wynik 2.3 2.3
+})
+
+test('Przypadek 3', () => {
+    const c_n=[1,1]
+    const b=[-5,-5,-4]
+    const N=[[-2,-1],[-1,-2],[-1,-1]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    expect(result.description).toStrictEqual(3)
+})
+
+test('Przypadek 5', () => {
+    const c_n = [-4, -2]
+    const b = [4, 6]
+    const N = [[0.5, 1.5], [0.5, 0.5]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    expect(result.description).toStrictEqual(5)
+})
+
+
+
+test('Przypadek 5', () => {
+    const c_n = [-1, -4]
+    const b = [4, -2]
+    const N = [[1, 1], [-1, -1]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    expect(result.description).toStrictEqual(5)
+})
+
