@@ -174,13 +174,48 @@ test('Przypadek 1', () => {
     // wynik 2.3 2.3
 })
 
-test('Przypadek 3', () => {
-    const c_n=[1,1]
-    const b=[-5,-5,-4]
-    const N=[[-2,-1],[-1,-2],[-1,-1]]
+
+test('Przypadek 2 - obszar sprzeczny', () => {
+    const c_n = [1, 1]
+    const b = [2, -3]
+    const N = [[1, 1], [-1, -1]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    expect(result.description).toStrictEqual(2)
+})
+
+
+test('function2 test', () => {
+    const c_n = [1, 1]
+    const b = [2, -3]
+    const N = [[1, 1], [-1, -1]]
+    expect((new DualSimplex()).function2([[0,0,-1],[1,1,0],[1,1,-1]])).toStrictEqual(true)
+    expect((new DualSimplex()).function2([[0,0,-1],[1,1,0],[1,1,0]])).toStrictEqual(true)
+    expect((new DualSimplex()).function2([[0,0,-1],[1,1,-1],[1,1,-1]])).toStrictEqual(true)
+     expect((new DualSimplex()).function2([[0,0,0],[1,1,-1],[1,1,-1]])).toStrictEqual(false)
+
+})
+
+
+test('Przypadek 3 - wiele rozwiazan', () => {
+
+    const c_n=[3,1]
+    const b=[-5,3]
+    const N=[[-3,-1],[1,1]]
     const result = (new DualSimplex()).dualSimplex(c_n, b, N)
     expect(result.description).toStrictEqual(3)
 })
+
+
+test('Przypadek 4', () => {
+    const c_n = [-4, -2]
+    const b = [4, 6]
+    const N = [[0.5, 1.5], [0.5, 0.5]]
+    const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+    expect(result.description).toStrictEqual(5)
+})
+
+
+
 
 test('Przypadek 5', () => {
     const c_n = [-4, -2]

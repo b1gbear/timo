@@ -42,10 +42,8 @@ class DualSimplex {
         }
     )
 
-    function2 = (simplexTable) => {
-        // find negative col
 
-        
+    function2 = simplexTable => {
         for (let j = 1; j < simplexTable[0].length; j++) {
             if (this.isLt(simplexTable[0][j],0)) {
                 let i = 1
@@ -53,23 +51,18 @@ class DualSimplex {
                     if (this.isGt(simplexTable[i][j] , 0))
                     {
                         break
-
-
                     }
-
                 }
-                
+
                 if (i === simplexTable.length) {
-                    
+
                     return true
                 }
             }
         }
-        
-        return false
-        // validate all rows below
-    }
 
+        return false
+    }
 
     indexOf0inFirstRow = simplexTable => {
         console.error(simplexTable[0],"stable")
@@ -95,30 +88,41 @@ class DualSimplex {
     }
 
     function3 = fullSimplexTable => {
-        return []
-
-        const indexof0 = this.indexOf0inFirstRow(fullSimplexTable)
-        
-        if (indexof0 < 0) {
-            console.error("nulla")
-
-            return null
+        // pierwsza wratosc wiersza mniejsza od 0
+        for ( let i = 1; i < fullSimplexTable.Y; i++){
+            if (this.isLt(fullSimplexTable.table[i][0],0)){
+                console.log("null1")
+                return null
+            }
         }
-        return []
-        //
-        // let bs = this.indexOf0inFirstRow(fullSimplexTable)
-        // if (fullSimplexTable.top[bs] > fullSimplexTable.X) {
-        //
-        //     return null
-        // }
-        //
-        // const array = []
-        // for (let i = 0; i < fullSimplexTable.Y; i++) {
-        //     const indexOf0 = this.indexOf0inFirstRow(fullSimplexTable)
-        //     this.primalIteration(fullSimplexTable, indexOf0)
-        //     array.push(this.simplexResult(fullSimplexTable.table))
-        // }
-        // return array
+        // pierwsza wartosc kolumny mniejsza od 0
+        for ( let j = 1; j < fullSimplexTable.X; j++){
+            if (this.isLt(fullSimplexTable.table[0][j],0)){
+                console.log("null2")
+
+                return null
+            }
+        }
+
+
+        for ( let j = 0; j < fullSimplexTable.table[0].length; j++){
+            console.log("fs1",fullSimplexTable.table[0][j])
+            if (this.isAlmost(fullSimplexTable.table[0][j],0)){
+                console.log("is almost")
+                let i = 1;
+                for (  ; i < fullSimplexTable.table.length; i++){
+                    if (!this.isGt(fullSimplexTable.table[i][j],0) ){
+                        break
+                    }
+                }
+                if ( i === fullSimplexTable.table.length){
+                    return true
+                }
+            }
+        }
+        console.log("null3")
+
+        return null
     }
 
 
@@ -127,7 +131,7 @@ class DualSimplex {
             if (this.isAlmost(fullSimplexTable[0][j] , 0)) {
                 let i = 1;
                 for (; i < fullSimplexTable.length; j++) {
-                    if ( this.isLt(fullSimplexTable[i][j],0) ){
+                    if ( this.isGt(fullSimplexTable[i][j],0) ){
                         break
                     }
                 }
@@ -165,6 +169,7 @@ class DualSimplex {
     }
 
     maximalRowBasedOnBCoefficientToPivotColumnElement = (simplexTable, row) => {
+        console.log("colchose",simplexTable)
         let minJ = null
         let minFactor = null
         for (let j = 1; j < simplexTable[0].length; j++) {
@@ -172,8 +177,10 @@ class DualSimplex {
             const y_r_j = simplexTable[row][j]
             const factor = simplexTable[0][j] / y_r_j
             if ((y_r_j < 0) && (minJ == null || factor > minFactor)) {
+
                 minJ = j
                 minFactor = factor
+                console.log("minJ/minFactor",minJ,minFactor)
             }
         }
         return minJ
@@ -185,12 +192,18 @@ class DualSimplex {
         const rows = result[0]
         const cols = result[1]
         const minRow = this.minimalNegativeElementInFirstColumn(simplexTable)
-        if (minRow == null){
-            
-        }
+
         const minCol = this.maximalRowBasedOnBCoefficientToPivotColumnElement(simplexTable, minRow)
+        if (minCol == null) {
+            return this.createResult(2, null)
+        }
+        console.log("minrow/mincol",minRow,minCol)
         this.onePhase.gaussian_elimination(simplexTable, minRow, minCol, rows, cols)
+        console.log("ge",simplexTable)
+
         this.onePhase.swapBaseSymbols(fullSimplexTable.top, minCol - 1, fullSimplexTable.left, minRow - 1)
+        console.log("swapbase",simplexTable)
+        return null
     }
 
 
@@ -232,15 +245,17 @@ class DualSimplex {
             return this.createResult(5,null)
         }
 
-        if ( this.function2(fullSimplexTable.table) ){
-            return this.createResult(2,null)
-        }
 
         const ret = this.iterateSimplex(fullSimplexTable);
         if ( ret !== null ){
             return ret
         }
 
+        console.log(fullSimplexTable.table)
+        const res3 = this.function3(fullSimplexTable)
+        if ( res3 !== null ){
+            return this.createResult(3,[this.simplexResult(fullSimplexTable)])
+        }
 
 
         return this.createResult(1,[this.simplexResult(fullSimplexTable)])
@@ -253,13 +268,18 @@ class DualSimplex {
         let val = !this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)
         
         while (val) {
-            
             if ( this.function2(fullSimplexTable.table) ){
                 return this.createResult(2,null)
             }
-            this.dualSimplexIteration(fullSimplexTable)
+            console.log(fullSimplexTable)
+            const r = this.dualSimplexIteration(fullSimplexTable)
+            if ( r !== null) {
+                return r
+            }
             val = !this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)
         }
+        console.log(fullSimplexTable)
+
         return null
     }
 
