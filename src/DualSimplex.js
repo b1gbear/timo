@@ -64,18 +64,6 @@ class DualSimplex {
         return false
     }
 
-    indexOf0inFirstRow = simplexTable => {
-        console.error(simplexTable[0],"stable")
-        for (let i = 1; i < simplexTable[0].length; i++) {
-            if (this.isAlmost(simplexTable[0][i], 0)){
-                return i
-
-            }
-        }
-        return -1
-    }
-
-
     primalIteration = (fullSimplexTable, minCol) => {
         const primal = new OnePhaseSimplex()
         const simplexTable = fullSimplexTable.table
@@ -281,41 +269,6 @@ class DualSimplex {
         console.log(fullSimplexTable)
 
         return null
-    }
-
-
-    is_on_unlimited_set = (a, rows, cols) => {// spradza czy zadanie ma wiele rozw. na zb. nieogr.
-        let row = 0
-        // zmienna licząca wiersze z degeneracją
-        let col = 0
-        for (let j = 1; j < cols; j++) {
-            // sprawdza czy w wierszu występuje zero - warunek: y_0 j_0 = 0
-            if (this.isAlmost(a[0][j] , 0)) {
-                col = j
-            } else {
-                return col
-            }
-        }
-
-        for (let i = 1; i < rows; i++) {
-            // sprawdza czy w zadaniu występuje degeneracja - warunek y_i0 = 0 dla i=1, ..., m
-            if (this.isAlmost(a[i][0] , 0)) {
-                row = row + 1
-            }
-        }
-
-        if (row === rows - 1) {
-            
-            return col
-        }
-
-        for (let i = 1; i < rows; i++) {
-            // sprawdza warunek: y_i j_0 <= 0 dla i=1, ..., m
-            if (this.isGt(a[i][col] , 0)) {
-                return 0
-            }
-        }
-        return col
     }
 
 }
