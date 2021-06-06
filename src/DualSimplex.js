@@ -75,20 +75,46 @@ class DualSimplex {
         primal.swapBaseSymbols(fullSimplexTable.top, minCol - 1, fullSimplexTable.left, minRow - 1)
     }
 
-    function3 = fullSimplexTable => {
+
+    function3 =  fullSimplexTable => {
+        const firstCheckCol = this.function3FindCol(fullSimplexTable)
+        if ( firstCheckCol < 0 ){
+            return null
+        }
+        console.log("Y", fullSimplexTable.Y)
+        const results = []
+        results.push(this.simplexResult(fullSimplexTable))
+        console.error(results)
+        for (let i = 0; i < fullSimplexTable.Y; i++) {
+                const column = this.function3FindCol(fullSimplexTable)
+                if ( column < 0){
+                    break
+                }
+                console.log("column/i",column,i)
+                console.log("table",fullSimplexTable)
+                this.primalIteration(fullSimplexTable,column)
+                results.push(this.simplexResult(fullSimplexTable))
+        }
+        console.error("rr1",results)
+
+        return results
+    }
+
+
+
+    function3FindCol = fullSimplexTable => {
         // pierwsza wratosc wiersza mniejsza od 0
         for ( let i = 1; i < fullSimplexTable.Y; i++){
             if (this.isLt(fullSimplexTable.table[i][0],0)){
                 console.log("null1")
-                return null
+                return -1
             }
         }
         // pierwsza wartosc kolumny mniejsza od 0
         for ( let j = 1; j < fullSimplexTable.X; j++){
             if (this.isLt(fullSimplexTable.table[0][j],0)){
                 console.log("null2")
-
-                return null
+                return -1
             }
         }
 
@@ -104,13 +130,11 @@ class DualSimplex {
                     }
                 }
                 if ( i === fullSimplexTable.table.length){
-                    return true
+                    return j
                 }
             }
         }
-        console.log("null3")
-
-        return null
+        return -1
     }
 
 
@@ -198,7 +222,10 @@ class DualSimplex {
     createResult = (description, x) => {
         return {
             description: description, // description as enum
-            x: x // list of vectors
+            x: x, // list of vectors
+            solved : () => {
+                return description === 1 || description === 3
+            }
         }
     }
 
@@ -242,7 +269,7 @@ class DualSimplex {
         console.log(fullSimplexTable.table)
         const res3 = this.function3(fullSimplexTable)
         if ( res3 !== null ){
-            return this.createResult(3,[this.simplexResult(fullSimplexTable)])
+            return this.createResult(3,res3)
         }
 
 

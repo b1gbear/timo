@@ -203,6 +203,14 @@ test('Przypadek 3 - wiele rozwiazan', () => {
     const N=[[-3,-1],[1,1]]
     const result = (new DualSimplex()).dualSimplex(c_n, b, N)
     expect(result.description).toStrictEqual(3)
+    console.error(result) // TODO: Create test for result equal
+    /*
+        const c_n = [-4, -2]
+        const b = [4, 6]
+        const N = [[0.5, 1.5], [0.5, 0.5]]
+        const result = (new DualSimplex()).dualSimplex(c_n, b, N)
+        expect(result.description).toStrictEqual(5)
+     */
 })
 
 
