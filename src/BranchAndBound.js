@@ -8,8 +8,11 @@ class BranchAndBound {
     /*CombinatorialSolution*/
     branch_and_bound_solve = (
         /* CombinatorialProblem */ problem,
-        /* ObjectiveFunction */ problem_constraints) => {
-
+        /* ObjectiveFunction */ problem_constraints,
+        delta ) => {
+        if (delta === undefined) {
+            delta = 1e-3
+        }
         let most_optimal_x_vec_result = null;
         let most_optimal_x_vec /*CombinatorialSolution*/ = null;
         // Step 2 above
@@ -29,9 +32,9 @@ class BranchAndBound {
         let i = 0;
         while (candidate_queue.length !== 0) {
             i++
-            if (i > 20) {
-                break
-            }
+            // if (i > 20) {
+            //     break
+            // }
             const /* GNode */ node = this.get_from_queue(candidate_queue);
 
 
@@ -42,20 +45,23 @@ class BranchAndBound {
                 // empty constraints
                 continue
             }
+            console.error(candidate_queue.length)
 
-            if (this.find_non_integer_in_result(current_solution.x).length === 0) /* Is integer solution */ {
+            let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1,delta);
 
+            if (first_index_array.length === 0) /* Is integer solution */ {
+                console.error("9ok")
                 // we are guaranteed to find best value for these constraints, no matter what
                 if (most_optimal_x_vec_result == null || current_solution.value < most_optimal_x_vec_result.value) {
                     most_optimal_x_vec = node;
                     most_optimal_x_vec_result = current_solution
                 }
             } else {
+                console.error("9nok", )
                 // 2 cases to move to if case
                 // * become integer_argument
                 // * become contradicted
 
-                let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1);
 
                 for (let j = 0; j < first_index_array.length; j++) {
                     let first_index_of_non_integer = first_index_array[j]
@@ -105,7 +111,8 @@ class BranchAndBound {
                 first_index_of_non_integer,
                 problem.length + 1,
                 Math.abs(value_of_non_integer)
-                , Math.sign(value_of_non_integer))
+                , (new MyMath).sign(value_of_non_integer)
+            )
         )
 
 
@@ -117,8 +124,9 @@ class BranchAndBound {
                 first_index_of_non_integer,
                 problem.length + 1,
                 (Math.abs(value_of_non_integer) + 1)
-                , -Math.sign(value_of_non_integer))
+                , -(new MyMath).sign(value_of_non_integer))
         )
+
 
 
         if (Math.sign(value_of_non_integer) < 0) {
@@ -134,9 +142,13 @@ class BranchAndBound {
 
 
         this.push_gnode_for_result(gt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
+
+
+
     }
 
     get_from_queue = queue => {
+        console.error("Before",queue.length)
         if (queue.length === 0) {
             return null
         }
@@ -148,7 +160,11 @@ class BranchAndBound {
                 max = i
             }
         }
-        return queue.splice(max, 1)[0]
+        const r = queue.splice(max, 1)[0]
+        var str = JSON.stringify(r, null, 2);
+        console.error("After",str)
+
+        return r
     }
 
     push_gnode_for_result = (gnode, problem, problem_constraints, queue, objective_function) => {
@@ -163,13 +179,21 @@ class BranchAndBound {
         }
     }
 
-    find_non_integer_in_result(current_solution,problem_length) {
+    find_non_integer_in_result(current_solution,problem_length,delta) {
+
+        if ( delta === undefined ){
+            delta = 0
+        }
+
         const arrr = []
         for (let i = 0; i < current_solution.length; i++) {
             let indexofnoint = -1
             for (let j = 1; j < problem_length; j++) {
                 if (
-                    !((new MyMath).isInt(current_solution[i][j]))
+
+                    ! (
+                        (new MyMath()).isAlmost(current_solution[i][j],Math.round(current_solution[i][j]),delta)
+                    )
                 ) {
                     indexofnoint = j
                     break;

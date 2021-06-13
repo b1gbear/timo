@@ -88,6 +88,14 @@ class MyMath {
         return matrix
     }
 
+    sign = (val) => {
+        return val === 0 ? 1 : Math.sign(val)
+    }
+
+    isAlmost(a, b,delta) {
+        return Math.abs(a - b) < delta
+    }
+
     NO_SOLUTION = (reason) => {
         return {"A": null, "B": null, "C": false, "reason": reason}
     }
