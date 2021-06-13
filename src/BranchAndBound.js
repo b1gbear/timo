@@ -1,11 +1,10 @@
+import GNode from "./GNode";
 import MyMath from "./MyMath";
 import DualSimplex from "./DualSimplex";
 import * as Utils from "./MyUtils";
 
 class BranchAndBound {
     /*
-
-
     /*CombinatorialSolution*/
     branch_and_bound_solve = (
         /* CombinatorialProblem */ problem,
@@ -19,7 +18,7 @@ class BranchAndBound {
         // during runtime, due to insufficient amount of information about obj f. results
         const candidate_queue = [];
 
-        this.push_gnode_for_result(new GNode(), problem, problem_constraints, candidate_queue);
+        this.push_gnode_for_result(new GNode(), problem, problem_constraints, candidate_queue, this.objective_function);
 
 
         // 1. Mamy
@@ -30,12 +29,11 @@ class BranchAndBound {
         let i = 0;
         while (candidate_queue.length !== 0) {
             i++
-            console.log("length", candidate_queue.length)
             if (i > 20) {
                 break
             }
             const /* GNode */ node = this.get_from_queue(candidate_queue);
-            console.error("998", node)
+
 
             /* CombinatorialSolution */
             const current_solution = node.result
@@ -45,8 +43,8 @@ class BranchAndBound {
                 continue
             }
 
-            if (this.find_non_integer(current_solution.x).length === 0) /* Is integer solution */ {
-                console.error("997")
+            if (this.find_non_integer_in_result(current_solution.x).length === 0) /* Is integer solution */ {
+
                 // we are guaranteed to find best value for these constraints, no matter what
                 if (most_optimal_x_vec_result == null || current_solution.value < most_optimal_x_vec_result.value) {
                     most_optimal_x_vec = node;
@@ -57,7 +55,7 @@ class BranchAndBound {
                 // * become integer_argument
                 // * become contradicted
 
-                let first_index_array = this.find_non_integer(current_solution.x);
+                let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1);
 
                 for (let j = 0; j < first_index_array.length; j++) {
                     let first_index_of_non_integer = first_index_array[j]
@@ -65,150 +63,150 @@ class BranchAndBound {
                     if (first_index_of_non_integer <= 0) {
                         continue
                     }
-                    console.log("ffi",first_index_array[j])
+
                     const value_of_non_integer = Math.trunc(current_solution.x[j][first_index_of_non_integer]);
                     first_index_of_non_integer--;
+                    this.extracted(
+                        value_of_non_integer,
+                        node,
+                        first_index_of_non_integer,
+                        problem,
+                        problem_constraints,
+                        candidate_queue
+                    );
 
-                    // we add lt constraint
-                    //                                        x_i   <=     value
-
-                    // we add gt constraint
-                    //                                        -x_i   >=     -value
-                    console.log("vval", value_of_non_integer, Math.sign(value_of_non_integer))
-                    const /*GNode*/ lt_for_gt0 = GNode.copy(node);
-                    // sign(value_of_non_integer) * [... 1 ...<= value_of_non_integer]
-                    lt_for_gt0.constraints.push(
-                        this.generateConstraintTable(
-                            first_index_of_non_integer,
-                            problem.length + 1,
-                            Math.abs(value_of_non_integer)
-                            , Math.sign(value_of_non_integer))
-                    )
-
-
-                    const /*GNode*/  gt_for_gt0 = GNode.copy(node);
-                    // -sign(value_of_non_integer) *
-                    // * [... 1 ... sign(value_of_non_integer) * (Math.abs(value_of_non_integer) + 1) ]
-                    gt_for_gt0.constraints.push(
-                        this.generateConstraintTable(
-                            first_index_of_non_integer,
-                            problem.length + 1,
-                            (Math.abs(value_of_non_integer) + 1)
-                            , -Math.sign(value_of_non_integer))
-                    )
-
-                    if (Math.sign(value_of_non_integer) < 0) {
-                        node.children.push(gt_for_gt0)
-                        node.children.push(lt_for_gt0)
-                    } else {
-                        node.children.push(lt_for_gt0)
-                        node.children.push(gt_for_gt0)
-                    }
-
-                    this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue);
-                    this.push_gnode_for_result(gt_for_gt0, problem, problem_constraints, candidate_queue);
                 }
             }
         }
-        console.log("endiis", i)
+
         return most_optimal_x_vec;
     }
 
+    extracted(value_of_non_integer, node, first_index_of_non_integer, problem, problem_constraints, candidate_queue) {
+        // console.error("args997")
+        // console.error(JSON.stringify({
+        //     value_of_non_integer:value_of_non_integer,
+        //     node:node,
+        //     first_index_of_non_integer:first_index_of_non_integer,
+        //     problem:problem,
+        //     problem_constraints:problem_constraints,
+        //     candidate_queue:candidate_queue
+        // }))
+        // we add lt constraint
+        //                                        x_i   <=     value
+
+        // we add gt constraint
+        //                                        -x_i   >=     -value
+        const /*GNode*/ lt_for_gt0 = GNode.copy(node);
+        // sign(value_of_non_integer) * [... 1 ...<= value_of_non_integer]
+
+        lt_for_gt0.constraints.push(
+            this.generateConstraintTable(
+                first_index_of_non_integer,
+                problem.length + 1,
+                Math.abs(value_of_non_integer)
+                , Math.sign(value_of_non_integer))
+        )
+
+
+        const /*GNode*/  gt_for_gt0 = GNode.copy(node);
+        // -sign(value_of_non_integer) *
+        // * [... 1 ... sign(value_of_non_integer) * (Math.abs(value_of_non_integer) + 1) ]
+        gt_for_gt0.constraints.push(
+            this.generateConstraintTable(
+                first_index_of_non_integer,
+                problem.length + 1,
+                (Math.abs(value_of_non_integer) + 1)
+                , -Math.sign(value_of_non_integer))
+        )
+
+
+        if (Math.sign(value_of_non_integer) < 0) {
+            node.children.push(gt_for_gt0)
+            node.children.push(lt_for_gt0)
+        } else {
+            node.children.push(lt_for_gt0)
+            node.children.push(gt_for_gt0)
+        }
+
+
+        this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
+
+
+        this.push_gnode_for_result(gt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
+    }
+
     get_from_queue = queue => {
-        let min = null
+        if (queue.length === 0) {
+            return null
+        }
+
+        let max = null
 
         for (let i = 0; i < queue.length; i++) {
-            if (min === null || queue[i].result[0] < queue[i].result[min]) {
-                min = i
+            if (max === null || queue[i].result[0] > queue[max].result[0]) {
+                max = i
             }
         }
-        const ret = queue.splice(min, 1)
-        return ret[0]
+        return queue.splice(max, 1)[0]
     }
 
-    push_gnode_for_result = (gnode, problem, problem_constraints, queue) => {
-        console.log("real cosntraints,", [...gnode.constraints, ...problem_constraints])
-        console.log("real cosntraints,", [...gnode.constraints, ...problem_constraints])
-        gnode.result = this.objective_function(problem, [...gnode.constraints, ...problem_constraints])
-        if (gnode.result.solved()) {
-            console.log("psh")
-            queue.push(gnode)
-        } else {
-            console.log("psh2")
+    push_gnode_for_result = (gnode, problem, problem_constraints, queue, objective_function) => {
+        function fun(c_n, b, N) {
+            return (new DualSimplex()).dualSimplex(c_n, b, N)
+        }
 
+
+        gnode.result = objective_function(problem, [...gnode.constraints, ...problem_constraints], fun)
+        if (gnode.result.solved()) {
+            queue.push(gnode)
         }
     }
 
-    find_non_integer(current_solution) {
-        console.log("currsol", current_solution)
+    find_non_integer_in_result(current_solution,problem_length) {
         const arrr = []
         for (let i = 0; i < current_solution.length; i++) {
             let indexofnoint = -1
-            for (let j = 1; j < current_solution[i].length; j++) {
-                if (! ((new MyMath).isInt(current_solution[i][j]))) {
-                    console.log("rri", i)
+            for (let j = 1; j < problem_length; j++) {
+                if (
+                    !((new MyMath).isInt(current_solution[i][j]))
+                ) {
                     indexofnoint = j
                     break;
                 }
             }
             arrr.push(indexofnoint)
         }
-        console.log("rri", -1)
-
         return arrr
     }
 
     generateConstraintTable = (position, arrLen, lessThan, multiply) => {
-        console.log("position/arrlen/lessThan,multiply",position,arrLen,lessThan,multiply)
         let arr = new Array(arrLen)
         for (let i = 0; i < arrLen; i++) {
             arr[i] = 0;
         }
-        console.log("lt", "mul", lessThan, multiply)
         arr[position] = 1 * multiply
         arr[arrLen - 1] = lessThan * multiply
         console.assert(Array.isArray(arr))
-        console.assert(arr.length ===3)
-        console.error("122", arr)
         return arr
     }
 
-    objective_function(problem, immCnstraints) {
+    objective_function(problem, immCnstraints, calculate) {
         const constraints = Utils.copy(immCnstraints)
-        console.log("cssi",immCnstraints)
-        console.log("cssi",immCnstraints)
-        console.log("css",constraints)
         const c_n = problem
         const b = []
         const N = []
-        console.log("constraints", constraints)
         for (let i = 0; i < constraints.length; i++) {
             b.push(constraints[i].pop())
             N.push(constraints[i])
         }
-        console.log("c_n", c_n)
-        console.log("b", b)
-        console.log("N", N)
-        return (new DualSimplex()).dualSimplex(c_n, b, N)
+        // console.log("c_n", c_n)
+        // console.log("b", b)
+        // console.log("N", N)
+        return calculate(c_n, b, N)
     }
 }
 
-
-class GNode {
-    static copy(otherGnode) {
-        const gnode = new GNode()
-        gnode.constraints = Utils.copy(otherGnode.constraints)
-        gnode.children = Utils.copy(otherGnode.children)
-        gnode.solution = Utils.copy(otherGnode.solution)
-        return gnode
-    }
-
-    constructor() {
-        this.constraints = []
-        this.children = []
-        this.solution = null
-    }
-}
 
 export default BranchAndBound
 

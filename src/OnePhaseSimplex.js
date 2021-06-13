@@ -38,9 +38,14 @@ class OnePhaseSimplex {
          *  r : number of non-artificial x variables
          *
          */
-        assert(this.math.isNumericVector(c_n), "c_n assertion")
-        assert(this.math.isNumericVector(b), "b assertion")
-        assert(this.math.isConsistent2dMatirx(N), "N assertion")
+        assert(this.math.isNumericVector(c_n), `c_n assertion C is ${c_n}, b is ${b}, N is ${N}`)
+        assert(this.math.isNumericVector(b), `b assertion C is ${c_n}, b is ${b}, N is ${N}`)
+        if ( !(this.math.isConsistent2dMatirx(N)) ) {
+            console. log("assert : C/b/N",c_n,"|",b,"|",N)
+        }
+        assert(this.math.isConsistent2dMatirx(N), `N assertion C is ${c_n}, b is ${b}, N is ${N}`)
+
+
         const s = b.length
         const r = c_n.length
         const matrix = this.math.create2dMatrix(s + 1, r + 1)

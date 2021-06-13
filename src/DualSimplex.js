@@ -81,22 +81,18 @@ class DualSimplex {
         if ( firstCheckCol < 0 ){
             return null
         }
-        console.log("Y", fullSimplexTable.Y)
+
         const results = []
         results.push(this.simplexResult(fullSimplexTable))
-        console.error(results)
+
         for (let i = 0; i < fullSimplexTable.Y; i++) {
                 const column = this.function3FindCol(fullSimplexTable)
                 if ( column < 0){
                     break
                 }
-                console.log("column/i",column,i)
-                console.log("table",fullSimplexTable)
                 this.primalIteration(fullSimplexTable,column)
                 results.push(this.simplexResult(fullSimplexTable))
         }
-        console.error("rr1",results)
-
         return results
     }
 
@@ -106,23 +102,19 @@ class DualSimplex {
         // pierwsza wratosc wiersza mniejsza od 0
         for ( let i = 1; i < fullSimplexTable.Y; i++){
             if (this.isLt(fullSimplexTable.table[i][0],0)){
-                console.log("null1")
                 return -1
             }
         }
         // pierwsza wartosc kolumny mniejsza od 0
         for ( let j = 1; j < fullSimplexTable.X; j++){
             if (this.isLt(fullSimplexTable.table[0][j],0)){
-                console.log("null2")
                 return -1
             }
         }
 
 
         for ( let j = 0; j < fullSimplexTable.table[0].length; j++){
-            console.log("fs1",fullSimplexTable.table[0][j])
             if (this.isAlmost(fullSimplexTable.table[0][j],0)){
-                console.log("is almost")
                 let i = 1;
                 for (  ; i < fullSimplexTable.table.length; i++){
                     if (!this.isGt(fullSimplexTable.table[i][j],0) ){
@@ -181,7 +173,6 @@ class DualSimplex {
     }
 
     maximalRowBasedOnBCoefficientToPivotColumnElement = (simplexTable, row) => {
-        console.log("colchose",simplexTable)
         let minJ = null
         let minFactor = null
         for (let j = 1; j < simplexTable[0].length; j++) {
@@ -192,7 +183,6 @@ class DualSimplex {
 
                 minJ = j
                 minFactor = factor
-                console.log("minJ/minFactor",minJ,minFactor)
             }
         }
         return minJ
@@ -209,12 +199,12 @@ class DualSimplex {
         if (minCol == null) {
             return this.createResult(2, null)
         }
-        console.log("minrow/mincol",minRow,minCol)
+        // console.log("minrow/mincol",minRow,minCol)
         this.onePhase.gaussian_elimination(simplexTable, minRow, minCol, rows, cols)
-        console.log("ge",simplexTable)
+        // console.log("ge",simplexTable)
 
         this.onePhase.swapBaseSymbols(fullSimplexTable.top, minCol - 1, fullSimplexTable.left, minRow - 1)
-        console.log("swapbase",simplexTable)
+        // console.log("swapbase",simplexTable)
         return null
     }
 
@@ -266,7 +256,6 @@ class DualSimplex {
             return ret
         }
 
-        console.log(fullSimplexTable.table)
         const res3 = this.function3(fullSimplexTable)
         if ( res3 !== null ){
             return this.createResult(3,res3)
@@ -278,22 +267,17 @@ class DualSimplex {
 
 
     iterateSimplex(fullSimplexTable) {
-        
-        
         let val = !this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)
-        
         while (val) {
             if ( this.function2(fullSimplexTable.table) ){
                 return this.createResult(2,null)
             }
-            console.log(fullSimplexTable)
             const r = this.dualSimplexIteration(fullSimplexTable)
             if ( r !== null) {
                 return r
             }
             val = !this.allCoefficientsInFirstColumnAboveOrEqualZero(fullSimplexTable.table)
         }
-        console.log(fullSimplexTable)
 
         return null
     }

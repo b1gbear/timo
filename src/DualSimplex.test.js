@@ -1,5 +1,6 @@
 import DualSimplex from "./DualSimplex";
 import * as Utils from "./MyUtils";
+import * as TestUtils from "./TestUtils";
 import OnePhaseSimplex from "./OnePhaseSimplex";
 
 
@@ -154,7 +155,6 @@ test('Przypadek 1', () => {
     const b = [-2, 3]
     const N = [[-2, -1], [-1, 1]]
     const result = (new DualSimplex()).dualSimplex(c_n, b, N)
-    console.error(result.x)
     expect(result.description).toStrictEqual(1)
 
 })
@@ -169,7 +169,6 @@ test('Przypadek 1', () => {
     const b = [-7, -7]
     const N = [[-2, -1], [-1, -2]]
     const result = (new DualSimplex()).dualSimplex(c_n, b, N)
-    console.error(result.x)
     expect(result.description).toStrictEqual(1)
     // wynik 2.3 2.3
 })
@@ -203,7 +202,9 @@ test('Przypadek 3 - wiele rozwiazan', () => {
     const N=[[-3,-1],[1,1]]
     const result = (new DualSimplex()).dualSimplex(c_n, b, N)
     expect(result.description).toStrictEqual(3)
-    console.error(result) // TODO: Create test for result equal
+
+    TestUtils.almostEqualArray([ 5, 1.6666666666666667, 0, 0, 1.3333333333333333 ], result[0],1e-3)
+    TestUtils.almostEqualArray([ 5, 1.0000000000000002, 1.9999999999999998, 0, 0 ], result[0],1e-3)
     /*
         const c_n = [-4, -2]
         const b = [4, 6]
