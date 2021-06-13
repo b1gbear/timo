@@ -12,7 +12,6 @@ test('objective function', () => {
     }
 
     const result = bnb.objective_function([1, 1], [[-2, -1, -7], [-1, -2, -7]], fun)
-    console.error(result)
     expect(true).toStrictEqual(true)
 })
 
@@ -213,9 +212,7 @@ test('objective_function creates good', () => {
 
 test('example iteartion', () => {
     const bnb = new BranchAndBound()
-
     const result = bnb.branch_and_bound_solve([1, 1], [[-2, -1, -7], [-1, -2, -7]])
-    console.error(result)
 })
 
 
@@ -235,7 +232,6 @@ test('objective_function creates good', () => {
         problem_constraints,
         candidate_queue
     )
-    console.error(candidate_queue[0])
 })
 
 

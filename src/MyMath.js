@@ -93,7 +93,7 @@ class MyMath {
     }
 
     isAlmost(a, b,delta) {
-        return Math.abs(a - b) < delta
+        return Math.abs(a - b) <= delta
     }
 
     NO_SOLUTION = (reason) => {

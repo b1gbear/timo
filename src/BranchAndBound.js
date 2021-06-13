@@ -45,19 +45,16 @@ class BranchAndBound {
                 // empty constraints
                 continue
             }
-            console.error(candidate_queue.length)
 
             let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1,delta);
 
             if (first_index_array.length === 0) /* Is integer solution */ {
-                console.error("9ok")
                 // we are guaranteed to find best value for these constraints, no matter what
                 if (most_optimal_x_vec_result == null || current_solution.value < most_optimal_x_vec_result.value) {
                     most_optimal_x_vec = node;
                     most_optimal_x_vec_result = current_solution
                 }
             } else {
-                console.error("9nok", )
                 // 2 cases to move to if case
                 // * become integer_argument
                 // * become contradicted
@@ -148,7 +145,7 @@ class BranchAndBound {
     }
 
     get_from_queue = queue => {
-        console.error("Before",queue.length)
+        // console.error("Before",queue.length)
         if (queue.length === 0) {
             return null
         }
@@ -162,7 +159,7 @@ class BranchAndBound {
         }
         const r = queue.splice(max, 1)[0]
         var str = JSON.stringify(r, null, 2);
-        console.error("After",str)
+        // console.error("After",str)
 
         return r
     }
@@ -195,6 +192,7 @@ class BranchAndBound {
                         (new MyMath()).isAlmost(current_solution[i][j],Math.round(current_solution[i][j]),delta)
                     )
                 ) {
+                    // console.error(i,current_solution[i][j],Math.round(current_solution[i][j]),delta)
                     indexofnoint = j
                     break;
                 }
