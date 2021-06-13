@@ -40,7 +40,7 @@ class BranchAndBound {
 
             /* CombinatorialSolution */
             const current_solution = node.result
-
+            console.error(current_solution)
             if (!current_solution.solved()) {
                 // empty constraints
                 continue
@@ -49,8 +49,9 @@ class BranchAndBound {
             let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1,delta);
 
             if (first_index_array.length === 0) /* Is integer solution */ {
+                console.error("yes")
                 // we are guaranteed to find best value for these constraints, no matter what
-                if (most_optimal_x_vec_result == null || current_solution.value < most_optimal_x_vec_result.value) {
+                if (most_optimal_x_vec_result == null || current_solution.result[0] > most_optimal_x_vec_result.result[0]) {
                     most_optimal_x_vec = node;
                     most_optimal_x_vec_result = current_solution
                 }
@@ -58,7 +59,7 @@ class BranchAndBound {
                 // 2 cases to move to if case
                 // * become integer_argument
                 // * become contradicted
-
+                console.error("no")
 
                 for (let j = 0; j < first_index_array.length; j++) {
                     let first_index_of_non_integer = first_index_array[j]
