@@ -2,9 +2,9 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-class DataForm extends React.Component {
+class DataX extends React.Component {
     state = {
-        "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
+        "list": [[1, 2, 3]],
         "c": [1, 2, 3],
         "ceq": [false, false, false]
     }
@@ -122,32 +122,15 @@ class DataForm extends React.Component {
                         return <th>x<sub>{index + 1}</sub></th>
                     })
                 }
-                <th>c</th>
             </tr>
             </thead> : null
 
         return (
             <div>
+                <Button onClick={() => this.calculateHook()}>Oblicz</Button>
 
-                {/*<div style={{textAlign: "center", marginTop: "1rem"}}>Proszę podać wzór funkcji oraz ograniczenia a*/}
-                {/*    następnie kliknąć przycisk*/}
-                {/*    Oblicz</div>*/}
-                {/*<div className={"box"} style={{marginTop: "2rem", marginBottom: "2rem"}}>*/}
-                {/*    <div className={"a"}>*/}
-                {/*        <Form.Control name="fun" type="text" placeholder="Wzór funkcji"*/}
-                {/*                      onChange={e => this.change(e)}*/}
-                {/*                      inline/>*/}
-                {/*    </div>*/}
-                {/*    <div className={"b"} style={{verticalAlign: "text-bottom"}}>*/}
-                {/*        <Button onClick={() => this.calculateHook()}>Oblicz</Button>*/}
-                {/*        <Button onClick={() => this.clearHook()}>Wyczysc</Button>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                <div>
-                    <Button name={"row_inc"} onClick={e => this.formChange(e)}>Dodaj wiersz</Button>
-                    <Button name={"row_dec"} onClick={e => this.formChange(e)}>Usuń wiersz</Button>
-                </div>
                 <div className={"box"}>
+
                     <div className={"a"}>
                         <Form>
                             <table style={{"width": "100%"}}>
@@ -168,27 +151,6 @@ class DataForm extends React.Component {
                                         })
                                         return <tr>
                                             {list}
-                                            <td>
-                                                <Form.Control
-                                                    style={{"width": "100%", "minWidth": "3.5rem"}}
-                                                    as="select"
-                                                    name={"ceq_" + index}
-                                                    value={this.state.ceq[index]}
-                                                    onChange={e => this.change(e)}
-                                                >
-                                                    <option value={true}>&le;</option>
-                                                    <option value={false}>&ge;</option>
-                                                </Form.Control>
-                                            </td>
-                                            <td>
-                                                <Form.Control
-                                                    style={{"width": "100%", "minWidth": "3em"}}
-                                                    name={"c_" + index}
-                                                    value={this.state.c[index]}
-                                                    onChange={e => this.change(e)}
-                                                    type="number" step="0.0001"
-                                                />
-                                            </td>
                                         </tr>
                                     })
                                 }
@@ -203,7 +165,7 @@ class DataForm extends React.Component {
                                 name={"col_inc"}
                                 onClick={e => this.formChange(e)}
                             >
-                                Dodaj kolumnę
+                                Dodaj zmienną
                             </Button>
                         </div>
                         <div>
@@ -212,7 +174,7 @@ class DataForm extends React.Component {
                                 name={"col_dec"}
                                 onClick={e => this.formChange(e)}
                             >
-                                Usuń kolumnę
+                                Usuń zmienną
                             </Button>
                         </div>
                     </div>
@@ -237,7 +199,7 @@ class DataForm extends React.Component {
     };
 }
 
-export default DataForm
+export default DataX
 
 
 

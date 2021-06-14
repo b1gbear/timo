@@ -5,6 +5,7 @@ import DataForm from "./DataForm";
 import Visualize from "./Visualize";
 import {Nav} from "react-bootstrap";
 import ReactDOM from 'react-dom';
+import DataX from "./DataX";
 
 // noinspection JSUnusedLocalSymbols
 const css = require('./app.css');
@@ -160,12 +161,20 @@ class App extends React.Component {
                     </div>
                     <Tab.Content className={"tabContent"}>
                         <Tab.Pane eventKey="input" title="Podaj Dane">
+
+                            <DataX
+                                onChange={this.formChangeHook}
+                                onCalculate={() => this.calculateHook()}
+                                onClear={() => this.clearHook()}
+                            >
+                            </DataX>
                             <DataForm
                                 onChange={this.formChangeHook}
                                 onCalculate={() => this.calculateHook()}
                                 onClear={() => this.clearHook()}
                             >
                             </DataForm>
+
                         </Tab.Pane>
                         <Tab.Pane eventKey="results" title="Wynik" style={{"height": "100%"}}>
                             <Results results={this.state.resultsParsed} c={this.state.c}/>
