@@ -8,12 +8,12 @@ class BranchAndBound {
 
     isAllMinuses = (arr) => {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] !== -1){
+            if (arr[i] !== -1) {
                 return false
             }
         }
         return true
-}
+    }
 
 
     /*
@@ -21,7 +21,7 @@ class BranchAndBound {
     branch_and_bound_solve = (
         /* Array */ problem,
         /* Array[Array] */ problem_constraints,
-        delta ) => {
+        delta) => {
         if (delta === undefined) {
             delta = 1e-3
         }
@@ -32,8 +32,8 @@ class BranchAndBound {
         // This algorithm over-simplifies fact that underlying tree structure may change
         // during runtime, due to insufficient amount of information about obj f. results
         const candidate_queue = [];
-
-        this.push_gnode_for_result(new GNode(), problem, problem_constraints, candidate_queue, this.objective_function);
+        const root = new GNode()
+        this.push_gnode_for_result(root, problem, problem_constraints, candidate_queue, this.objective_function);
 
 
         // 1. Mamy
@@ -61,16 +61,16 @@ class BranchAndBound {
 
             let first_index_array = this.find_non_integer_in_result(
                 current_solution.x,
-                problem.length+1,
+                problem.length + 1,
                 delta
             );
 
-            console.error("first_index_array/currsol",first_index_array,"/",current_solution.x)
-            if (this.isAllMinuses(first_index_array )) /* Is integer solution */ {
+            console.error("first_index_array/currsol", first_index_array, "/", current_solution.x)
+            if (this.isAllMinuses(first_index_array)) /* Is integer solution */ {
 
                 // we are guaranteed to find best value for these constraints, no matter what
                 console.error("most_optimal_x_vec_result/current_solution.result[0]",
-                    most_optimal_x_vec_result," / ",
+                    most_optimal_x_vec_result, " / ",
                     current_solution, " / ",
                     most_optimal_x_vec_result != null ? most_optimal_x_vec_result.x[0] : null
                 )
@@ -106,7 +106,10 @@ class BranchAndBound {
             }
         }
 
-        return most_optimal_x_vec;
+        return {
+            max: most_optimal_x_vec,
+            root : root
+        };
     }
 
     extracted(value_of_non_integer, node, first_index_of_non_integer, problem, problem_constraints, candidate_queue) {
@@ -148,24 +151,26 @@ class BranchAndBound {
                 , -(new MyMath).sign(value_of_non_integer))
         )
 
+        const ltviable = this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function)
+
+        const gtviable = this.push_gnode_for_result(gt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
 
 
         if (Math.sign(value_of_non_integer) < 0) {
-            node.children.push(gt_for_gt0)
-            node.children.push(lt_for_gt0)
+            if (gtviable) {
+                node.left = (gt_for_gt0);
+            }
+            if (ltviable) {
+                node.right = (lt_for_gt0);
+            }
         } else {
-            node.children.push(lt_for_gt0)
-            node.children.push(gt_for_gt0)
+            if (ltviable) {
+                node.left = (lt_for_gt0);
+            }
+            if (gtviable) {
+                node.right = (gt_for_gt0);
+            }
         }
-
-
-
-        this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
-
-
-        this.push_gnode_for_result(gt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
-
-
 
     }
 
@@ -203,9 +208,9 @@ class BranchAndBound {
         return false
     }
 
-    find_non_integer_in_result(current_solution,problem_length,delta) {
+    find_non_integer_in_result(current_solution, problem_length, delta) {
 
-        if ( delta === undefined ){
+        if (delta === undefined) {
             delta = 0
         }
 
@@ -215,8 +220,8 @@ class BranchAndBound {
             for (let j = 1; j < problem_length; j++) {
                 if (
 
-                    ! (
-                        (new MyMath()).isAlmost(current_solution[i][j],Math.round(current_solution[i][j]),delta)
+                    !(
+                        (new MyMath()).isAlmost(current_solution[i][j], Math.round(current_solution[i][j]), delta)
                     )
                 ) {
                     // console.error(i,current_solution[i][j],Math.round(current_solution[i][j]),delta)

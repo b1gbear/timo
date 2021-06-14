@@ -4,14 +4,16 @@ class GNode {
     static copy(otherGnode) {
         const gnode = new GNode()
         gnode.constraints = Utils.copy(otherGnode.constraints)
-        gnode.children = Utils.copy(otherGnode.children)
+        gnode.left = Utils.copy(otherGnode.left)
+        gnode.right = Utils.copy(otherGnode.right)
         gnode.solution = Utils.copy(otherGnode.solution)
         return gnode
     }
 
     constructor() {
         this.constraints = []
-        this.children = []
+        this.left = null
+        this.right = null
         this.solution = null
     }
 }

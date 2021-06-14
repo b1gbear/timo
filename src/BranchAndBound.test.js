@@ -213,7 +213,8 @@ test('objective_function creates good', () => {
 test('example iteartion', () => {
     const bnb = new BranchAndBound()
     const result = bnb.branch_and_bound_solve([1, 1], [[-2, -1, -7], [-1, -2, -7]])
-    console.error("result is", JSON.stringify(result, null, 2)); // spacing level = 2)
+    console.error("result is", JSON.stringify(result.max, null, 2)); // spacing level = 2)
+    console.error("root is", JSON.stringify(result.root, null, 2)); // spacing level = 2)
 })
 
 
@@ -249,7 +250,8 @@ test('bug with 3 elements in N array instead of expected 2', () => {
                 -3
             ]
         ],
-        "children": [],
+        "left": null,
+        "right": null,
         "solution": null,
         "result": {
             "description": 1,
@@ -296,7 +298,8 @@ test('bug with 3 elements in N array instead of expected 2', () => {
                     1
                 ]
             ],
-            "children": [],
+            "left": null,
+            "right": null,
             "solution": null,
             "result": {
                 "description": 1,
@@ -326,7 +329,8 @@ test('bug with 3 elements in N array instead of expected 2', () => {
                     -2
                 ]
             ],
-            "children": [],
+            "left": null,
+            "right": null,
             "solution": null,
             "result": {
                 "description": 1,
