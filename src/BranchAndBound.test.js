@@ -213,7 +213,7 @@ test('objective_function creates good', () => {
 test('example iteartion', () => {
     const bnb = new BranchAndBound()
     const result = bnb.branch_and_bound_solve([1, 1], [[-2, -1, -7], [-1, -2, -7]])
-    expect(false).toStrictEqual(true)
+    console.error("result is", JSON.stringify(result, null, 2)); // spacing level = 2)
 })
 
 

@@ -4,11 +4,23 @@ import DualSimplex from "./DualSimplex";
 import * as Utils from "./MyUtils";
 
 class BranchAndBound {
+
+
+    isAllMinuses = (arr) => {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== -1){
+                return false
+            }
+        }
+        return true
+}
+
+
     /*
     /*CombinatorialSolution*/
     branch_and_bound_solve = (
-        /* CombinatorialProblem */ problem,
-        /* ObjectiveFunction */ problem_constraints,
+        /* Array */ problem,
+        /* Array[Array] */ problem_constraints,
         delta ) => {
         if (delta === undefined) {
             delta = 1e-3
@@ -41,17 +53,29 @@ class BranchAndBound {
             /* CombinatorialSolution */
             const current_solution = node.result
             console.error(current_solution)
+
             if (!current_solution.solved()) {
                 // empty constraints
                 continue
             }
 
-            let first_index_array = this.find_non_integer_in_result(current_solution.x,problem.length+1,delta);
+            let first_index_array = this.find_non_integer_in_result(
+                current_solution.x,
+                problem.length+1,
+                delta
+            );
 
-            if (first_index_array.length === 0) /* Is integer solution */ {
-                console.error("yes")
+            console.error("first_index_array/currsol",first_index_array,"/",current_solution.x)
+            if (this.isAllMinuses(first_index_array )) /* Is integer solution */ {
+
                 // we are guaranteed to find best value for these constraints, no matter what
-                if (most_optimal_x_vec_result == null || current_solution.result[0] > most_optimal_x_vec_result.result[0]) {
+                console.error("most_optimal_x_vec_result/current_solution.result[0]",
+                    most_optimal_x_vec_result," / ",
+                    current_solution, " / ",
+                    most_optimal_x_vec_result != null ? most_optimal_x_vec_result.x[0] : null
+                )
+                // TODO: dodac UTki
+                if (most_optimal_x_vec_result == null || current_solution.x[0] > most_optimal_x_vec_result.x[0]) {
                     most_optimal_x_vec = node;
                     most_optimal_x_vec_result = current_solution
                 }
@@ -59,7 +83,6 @@ class BranchAndBound {
                 // 2 cases to move to if case
                 // * become integer_argument
                 // * become contradicted
-                console.error("no")
 
                 for (let j = 0; j < first_index_array.length; j++) {
                     let first_index_of_non_integer = first_index_array[j]
@@ -136,6 +159,7 @@ class BranchAndBound {
         }
 
 
+
         this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function);
 
 
@@ -174,7 +198,9 @@ class BranchAndBound {
         gnode.result = objective_function(problem, [...gnode.constraints, ...problem_constraints], fun)
         if (gnode.result.solved()) {
             queue.push(gnode)
+            return true
         }
+        return false
     }
 
     find_non_integer_in_result(current_solution,problem_length,delta) {
