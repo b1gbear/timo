@@ -4,8 +4,8 @@ import Form from 'react-bootstrap/Form';
 
 class DataForm extends React.Component {
     state = {
-        "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
-        "c": [1, 2, 3],
+        "list": [[-2, -1], [-1,-2]],
+        "c": [-7,-7],
         "ceq": [true, true, true]
     }
 

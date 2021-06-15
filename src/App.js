@@ -139,7 +139,7 @@ class App extends React.Component {
 
         if (result.max !== null){
             console.error("008",result.max)
-             resultsParsed = this.createResultsParsed(this.deepcopy(result.max.solution.x));
+             resultsParsed = this.createResultsParsed(this.deepcopy(result.max.result.x));
 
         }
         console.error("resultsParsed")

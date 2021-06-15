@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 class DataX extends React.Component {
     state = {
-        "list": [[1, 2, 3]],
+        "list": [[-1,-1]],
         "c": [1, 2, 3],
         "ceq": [false, false, false]
     }
