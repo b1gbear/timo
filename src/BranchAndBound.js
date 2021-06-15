@@ -43,7 +43,7 @@ class BranchAndBound {
         // 2. Zbiór pusty => Nie mamy => nie rozwijamy drzewa
         let i = 0;
         while (candidate_queue.length !== 0) {
-            i++
+
             // if (i > 20) {
             //     break
             // }

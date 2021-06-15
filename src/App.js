@@ -134,6 +134,9 @@ class App extends React.Component {
 
         const result = bnb.branch_and_bound_solve(fun, constr)
 
+
+        this.addReasonableName(result.root)
+
         let resultsParsed = [[]]
         console.error("007",result)
 
@@ -231,6 +234,33 @@ class App extends React.Component {
                 </Tab.Container>
             </div>
         );
+    }
+
+    addReasonableName(root) {
+        console.log("dupa")
+        for (let i = 0; i < root.children.length; i++) {
+            this.addReasonableName(root.children[i])
+        }
+        let name = ""
+        if (root.constraints.length === 0 ){
+            name = "brak ograniczen"
+        } else {
+            const last_constraint = root.constraints[root.constraints.length-1];
+            let foundIndex = -1
+            let gt = false
+            for (let i = 0; i < last_constraint.length; i++) {
+                if (last_constraint[i] === -1){
+                    foundIndex = i
+                    gt = true
+                }else if ( last_constraint[i] === 1 ){
+                    foundIndex = i
+                    gt = false
+                }
+            }
+            const sign = gt ? ">=" : "<="
+            name = `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1]}`
+        }
+        root.name = name
     }
 }
 
