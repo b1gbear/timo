@@ -209,15 +209,6 @@ test('objective_function creates good', () => {
     )
 })
 
-
-test('example iteartion', () => {
-    const bnb = new BranchAndBound()
-    const result = bnb.branch_and_bound_solve([1, 1], [[-2, -1, -7], [-1, -2, -7]])
-    console.error("result is", JSON.stringify(result.max, null, 2)); // spacing level = 2)
-    console.error("root is", JSON.stringify(result.root, null, 2)); // spacing level = 2)
-})
-
-
 test('objective_function creates good', () => {
 
     const value_of_non_integer = 3.0
@@ -361,6 +352,36 @@ test('bug with 3 elements in N array instead of expected 2', () => {
 
 })
 
+
+test('example iteartion', () => {
+    const bnb = new BranchAndBound()
+    const result = bnb.branch_and_bound_solve([1, 1], [[-2, -1, -7], [-1, -2, -7]])
+    console.error("result is", JSON.stringify(result.max, null, 2)); // spacing level = 2)
+    console.error("root is", JSON.stringify(result.root, null, 2)); // spacing level = 2)
+})
+
+test('przyklad 1', () => {
+    const bnb = new BranchAndBound()
+    const result = bnb.branch_and_bound_solve([333,122], [
+        [1,1,3],
+        [-2,-1,-3],
+        [-1,-0.5,-2],
+        [-1,1,2]
+    ])
+    console.error("result is", JSON.stringify(result.max, null, 2)); // spacing level = 2)
+    console.error("root is", JSON.stringify(result.root, null, 2)); // spacing level = 2)
+})
+
+
+
+test('przyklad 1', () => {
+    const bnb = new BranchAndBound()
+    const result = bnb.branch_and_bound_solve([1,2], [
+        [2,4,3.85],
+    ])
+    console.error("result is", JSON.stringify(result.max, null, 2)); // spacing level = 2)
+    console.error("root is", JSON.stringify(result.root, null, 2)); // spacing level = 2)
+})
 
 
 
