@@ -108,6 +108,7 @@ class BranchAndBound {
         }
 
         return {
+            dim: problem.length,
             max: most_optimal_x_vec,
             root : root
         };

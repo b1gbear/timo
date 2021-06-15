@@ -153,7 +153,8 @@ class App extends React.Component {
             "activeKey": "results",
             resultsActive: true,
             resultsParsed: resultsParsed,
-            tree: result.root
+            tree: result.root,
+            dim: result.dim
         })
     };
 
@@ -227,7 +228,7 @@ class App extends React.Component {
                             <Results results={this.state.resultsParsed} c={this.state.c}/>
                         </Tab.Pane>
                         <Tab.Pane eventKey="visualize" title="Wizualizacja" style={{"height": "100%"}}>
-                            <Visualize tree={this.state.tree}/>
+                            <Visualize tree={this.state.tree} dim={this.state.dim}/>
                         </Tab.Pane>
                     </Tab.Content>
 

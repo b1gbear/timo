@@ -24,11 +24,31 @@ class Visualize extends React.Component {
     }
 
     onNodeClick = e => {
+        console.error("edim",e.dim+1)
 
         console.error(e)
+        const liist = [];
+        for (let i = 0; i < e.result.x.length; i++) {
+            console.error("edim",e.dim+1)
+            const floats = [];
+
+            for (let j = 1; j < this.props.dim+1; j++) {
+                const v = e.result.x[i][j].toFixed(3);
+
+                floats.push(
+                    <span>{v}</span>
+                        );
+                if ( j < this.props.dim ){
+                    floats.push(<span>, </span>);
+                }
+            }
 
 
-        const restring = <div> {this.solname(e.result.description)}</div>
+            liist.push(<div><div> max = {e.result.x[i][0].toFixed(3)}</div> <div> x_{i+1} = [{floats}]</div></div>);
+        }
+
+
+        const restring = <div> <div>{this.solname(e.result.description)} </div> {liist} </div>;
 
 
         this.setState({
