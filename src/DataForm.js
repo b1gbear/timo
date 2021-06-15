@@ -6,7 +6,7 @@ class DataForm extends React.Component {
     state = {
         "list": [[1, 2, 3], [3, 4, 5], [6, 7, 8]],
         "c": [1, 2, 3],
-        "ceq": [false, false, false]
+        "ceq": [true, true, true]
     }
 
     constructor(props) {
