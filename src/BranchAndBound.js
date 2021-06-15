@@ -159,16 +159,20 @@ class BranchAndBound {
         if (Math.sign(value_of_non_integer) < 0) {
             if (gtviable) {
                 node.left = (gt_for_gt0);
+                node.children.push(node.left)
             }
             if (ltviable) {
                 node.right = (lt_for_gt0);
+                node.children.push(node.right)
             }
         } else {
             if (ltviable) {
                 node.left = (lt_for_gt0);
+                node.children.push(node.left)
             }
             if (gtviable) {
                 node.right = (gt_for_gt0);
+                node.children.push(node.right)
             }
         }
 

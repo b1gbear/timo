@@ -252,6 +252,7 @@ test('bug with 3 elements in N array instead of expected 2', () => {
         ],
         "left": null,
         "right": null,
+        "children" : [],
         "solution": null,
         "result": {
             "description": 1,
