@@ -258,7 +258,8 @@ class App extends React.Component {
                 }
             }
             const sign = gt ? ">=" : "<="
-            name = `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1]}`
+            const value = gt ? -1 : 1
+            name = `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1] * value}`
         }
         root.name = name
     }
