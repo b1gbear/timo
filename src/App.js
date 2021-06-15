@@ -57,26 +57,12 @@ class App extends React.Component {
         fun: ""
     }
 
-    createResultsParsed = (list, c) => {
+    createResultsParsed = (list) => {
         let resultsParsed = []
-        let firstSize = list.length !== 0 ? list[0].length : null
-        list.forEach((innerList, index) => {
-            innerList.push(c[index])
+        list[0].forEach((value, index) => {
+            resultsParsed.push(<span>x<sub>{index}</sub></span>)
         })
-
-        if (list.length !== 0) {
-
-            list[0].forEach((value, index) => {
-                if (index >= firstSize) {
-                    return
-                }
-                let elem = <span>x<sub>{index + 1}</sub></span>
-                resultsParsed.push(elem)
-            })
-            resultsParsed.push("c")
-        }
         return [resultsParsed].concat(list)
-
     }
 
     deepcopy = obj => {
