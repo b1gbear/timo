@@ -93,6 +93,7 @@ class BranchAndBound {
 
                     const value_of_non_integer = Math.trunc(current_solution.x[j][first_index_of_non_integer]);
                     first_index_of_non_integer--;
+                    console.error("999=",first_index_of_non_integer)
                     this.extracted(
                         value_of_non_integer,
                         node,
@@ -150,6 +151,9 @@ class BranchAndBound {
                 (Math.abs(value_of_non_integer) + 1)
                 , -(new MyMath).sign(value_of_non_integer))
         )
+
+        console.error("ltviable",lt_for_gt0)
+        console.error("gtviable",gt_for_gt0)
 
         const ltviable = this.push_gnode_for_result(lt_for_gt0, problem, problem_constraints, candidate_queue, this.objective_function)
 

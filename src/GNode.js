@@ -18,6 +18,7 @@ class GNode {
         this.right = null
         this.children = []
         this.solution = null
+        this.name = "w4xd"
     }
 }
 

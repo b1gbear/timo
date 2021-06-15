@@ -6,6 +6,8 @@ import Visualize from "./Visualize";
 import {Nav} from "react-bootstrap";
 import ReactDOM from 'react-dom';
 import DataX from "./DataX";
+import BranchAndBound from "./BranchAndBound";
+import MyMath from "./MyMath";
 
 // noinspection JSUnusedLocalSymbols
 const css = require('./app.css');
@@ -85,24 +87,70 @@ class App extends React.Component {
 
     matrixChangeHook = (list, c, ceq, fun) => {
         // All code below is to prepare Results table
-        const resultsParsed = this.createResultsParsed(this.deepcopy(list), this.deepcopy(c))
         const sc = {
             results: list,
-            resultsParsed: resultsParsed,
             c: c,
             ceq: ceq,
         }
         console.error("state, changed except fun")
         console.error(sc)
-        this.setState( sc )
+        this.setState(sc)
     };
+
+    generateBnBTable = (results, c, ceq) => {
+        const matrix = []
+        for (let i = 0; i < results.length; i++) {
+            const curr = this.deepcopy(results[i])
+            curr.push(c[i])
+
+            if (false === ceq[i]) {
+                (new MyMath()).arrMultiply(curr,-1)
+            }
+            matrix.push(curr)
+        }
+        return matrix
+    }
 
     calculateHook = () => {
         console.log("calculateHook()")
+
+
+        const bnb = new BranchAndBound()
+
+        console.error("sfun", this.state.fun[0])
+        const pc = [[-2, -1, 0, -7], [-1, -2, 0, -7]]
+        console.error("pc", pc)
+
+        const fun = this.deepcopy( this.state.fun[0] );
+        (new MyMath()).arrMultiply(fun,-1);
+
+        const constr = this.generateBnBTable(this.state.results, this.state.c, this.state.ceq);
+
+        console.error("fun")
+        console.error(fun)
+
+        console.error("constr")
+        console.error(constr)
+
+        const result = bnb.branch_and_bound_solve(fun, constr)
+
+        let resultsParsed = [[]]
+        console.error("007",result)
+
+        if (result.max !== null){
+            console.error("008",result.max)
+             resultsParsed = this.createResultsParsed(this.deepcopy(result.max.solution.x));
+
+        }
+        console.error("resultsParsed")
+        console.error(resultsParsed)
+
+
         this.setState({
             "activeKey": "results",
             resultsActive: true,
-            tree: TREE
+            resultsParsed: resultsParsed,
+            tree: result.root
         })
     };
 
@@ -165,8 +213,9 @@ class App extends React.Component {
                             </DataX>
                             <DataForm
                                 onChange={this.matrixChangeHook}
-                                onCalculate={() => {}}
-                                onClear={ {} }
+                                onCalculate={() => {
+                                }}
+                                onClear={{}}
                             >
                             </DataForm>
 

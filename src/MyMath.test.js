@@ -225,3 +225,12 @@ test('ge5', () => {
     const R = r.B
 });
 
+
+test('arrMultiply', () => {
+    const arr = [-1,-2,-3];
+    (new MyMath()).arrMultiply(arr,-1);
+    expect((arr)).toStrictEqual([1,2,3])
+});
+
+
+

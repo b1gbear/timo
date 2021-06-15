@@ -92,6 +92,15 @@ class MyMath {
         return val === 0 ? 1 : Math.sign(val)
     }
 
+    arrMultiply = (arr,value) => {
+        for (let j = 0; j < arr.length; j++) {
+            arr[j] *= value
+        }
+        console.error("dupa")
+        console.error(arr)
+
+    }
+
     isAlmost(a, b,delta) {
         return Math.abs(a - b) <= delta
     }

@@ -9,10 +9,12 @@ class Results extends React.Component {
 
 
     render() {
+        console.error("2213",this.props.results)
         if (this.props.results === undefined) {
             console.error("Results Component: results are not array")
             return <div/>
         }
+
         // noinspection JSUnusedLocalSymbols
         return (
 
