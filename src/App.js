@@ -83,23 +83,32 @@ class App extends React.Component {
         return JSON.parse(JSON.stringify(obj));
     }
 
-    formChangeHook = (list, c, ceq, fun) => {
-        console.log("formChangeHook()")
-        console.log("list: ", list, c)
-        console.log("c: ", c)
-        console.log("ceq: ", ceq)
-        console.log("fun: ", fun)
-
+    functionChangeHook = (list, c, ceq, fun) => {
         // All code below is to prepare Results table
         const resultsParsed = this.createResultsParsed(this.deepcopy(list), this.deepcopy(c))
 
-        this.setState({
+        const sc = {
+            fun: list,
+        }
+        this.setState(sc)
+
+        console.error("state, changed fun")
+        console.error(sc)
+    };
+
+
+    matrixChangeHook = (list, c, ceq, fun) => {
+        // All code below is to prepare Results table
+        const resultsParsed = this.createResultsParsed(this.deepcopy(list), this.deepcopy(c))
+        const sc = {
             results: list,
             resultsParsed: resultsParsed,
             c: c,
             ceq: ceq,
-            fun: fun
-        })
+        }
+        console.error("state, changed except fun")
+        console.error(sc)
+        this.setState( sc )
     };
 
     calculateHook = () => {
@@ -163,15 +172,15 @@ class App extends React.Component {
                         <Tab.Pane eventKey="input" title="Podaj Dane">
 
                             <DataX
-                                onChange={this.formChangeHook}
+                                onChange={this.functionChangeHook}
                                 onCalculate={() => this.calculateHook()}
                                 onClear={() => this.clearHook()}
                             >
                             </DataX>
                             <DataForm
-                                onChange={this.formChangeHook}
-                                onCalculate={() => this.calculateHook()}
-                                onClear={() => this.clearHook()}
+                                onChange={this.matrixChangeHook}
+                                onCalculate={() => {}}
+                                onClear={ {} }
                             >
                             </DataForm>
 
