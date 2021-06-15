@@ -135,7 +135,7 @@ class App extends React.Component {
         const result = bnb.branch_and_bound_solve(fun, constr)
 
 
-        this.addReasonableName(result.root)
+        this.addReasonableName(result.root,result.max)
 
         let resultsParsed = [[]]
         console.error("007",result)
@@ -237,14 +237,17 @@ class App extends React.Component {
         );
     }
 
-    addReasonableName(root) {
+    addReasonableName(root,max) {
         console.log("dupa")
         for (let i = 0; i < root.children.length; i++) {
-            this.addReasonableName(root.children[i])
+            this.addReasonableName(root.children[i],max)
         }
         let name = ""
+        if ( root === max){
+            name += "rozw: "
+        }
         if (root.constraints.length === 0 ){
-            name = "brak ograniczen"
+            name += "brak ograniczen"
         } else {
             const last_constraint = root.constraints[root.constraints.length-1];
             let foundIndex = -1
@@ -260,7 +263,7 @@ class App extends React.Component {
             }
             const sign = gt ? ">=" : "<="
             const value = gt ? -1 : 1
-            name = `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1] * value}`
+            name += `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1] * value}`
         }
         root.name = name
     }
