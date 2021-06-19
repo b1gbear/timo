@@ -171,6 +171,28 @@ class App extends React.Component {
 
         const dim = 3
 
+        const node = {
+            "constraints": [],
+            "left": null,
+            "right": null,
+            "children": [],
+            "solution": null,
+            "name": "brak ograniczen",
+            "result": {
+                "description": 1,
+                "x": [
+                    [
+                        4.666666666666667,
+                        2.333333333333333,
+                        2.3333333333333335,
+                        0,
+                        0
+                    ]
+                ]
+            }
+        }
+
+
         const mtree = {
             "constraints": [],
             "left": null,
