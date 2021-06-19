@@ -43,10 +43,10 @@ class BranchAndBound {
         // 2. Zbiór pusty => Nie mamy => nie rozwijamy drzewa
         let i = 0;
         while (candidate_queue.length !== 0) {
-
-            // if (i > 20) {
-            //     break
-            // }
+            i++
+            if (i > 20) {
+                break
+            }
             const /* GNode */ node = this.get_from_queue(candidate_queue);
 
 
@@ -266,7 +266,9 @@ class BranchAndBound {
         // console.log("c_n", c_n)
         // console.log("b", b)
         // console.log("N", N)
-        return calculate(c_n, b, N)
+        const wynik = calculate(c_n, b, N)
+        console.error("wynik: ",wynik)
+        return wynik
     }
 }
 
