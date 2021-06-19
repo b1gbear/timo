@@ -149,13 +149,169 @@ class App extends React.Component {
         console.error(resultsParsed)
 
 
-        this.setState({
+        const resultsparsed = [
+            [
+                <span>x<sub>0</sub></span>,
+                <span>x<sub>1</sub></span>,
+                <span>x<sub>2</sub></span>,
+                <span>x<sub>3</sub></span>,
+                <span>x<sub>4</sub></span>,
+                <span>x<sub>5</sub></span>
+            ],
+            [
+                5,
+                5,
+                5,
+                5,
+                5,
+                5,
+            ]
+        ]
+
+
+        const dim = 3
+
+        const mtree = {
+            "constraints": [],
+            "left": null,
+            "right": null,
+            "children": [
+                {
+                    "constraints": [
+                        [
+                            1,
+                            0,
+                            4
+                        ]
+                    ],
+                    "left": null,
+                    "right": null,
+                    "children": [],
+                    "solution": null,
+                    "name": "x_1 <= 2",
+                    "result": {
+                        "description": 1,
+                        "x": [
+                            [
+                                1,
+                                1.9999999999999998,
+                                3,
+                                0,
+                                0,
+                                0.9999999999999998
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "constraints": [
+                        [
+                            -1,
+                            0,
+                            -3
+                        ]
+                    ],
+                    "left": null,
+                    "right": null,
+                    "children": [
+                        {
+                            "constraints": [
+                                [
+                                    -1,
+                                    0,
+                                    -3
+                                ]
+                            ],
+                            "left": null,
+                            "right": null,
+                            "children": [],
+                            "solution": null,
+                            "name": "rozw: x_1 >= dupa",
+                            "result": {
+                                "description": 1,
+                                "x": [
+                                    [
+                                        5,
+                                        3,
+                                        2,
+                                        0,
+                                        1.0000000000000002,
+                                        0
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "constraints": [
+                                [
+                                    -1,
+                                    0,
+                                    -3
+                                ]
+                            ],
+                            "left": null,
+                            "right": null,
+                            "children": [],
+                            "solution": null,
+                            "name": "rozw: x_1 >= dupa",
+                            "result": {
+                                "description": 1,
+                                "x": [
+                                    [
+                                        5,
+                                        3,
+                                        2,
+                                        0,
+                                        1.0000000000000002,
+                                        0
+                                    ]
+                                ]
+                            }
+                        }
+
+                    ],
+                    "solution": null,
+                    "name": "rozw: x_1 >= dupa",
+                    "result": {
+                        "description": 1,
+                        "x": [
+                            [
+                                5,
+                                3,
+                                2,
+                                0,
+                                1.0000000000000002,
+                                0
+                            ]
+                        ]
+                    }
+                }
+            ],
+            "solution": null,
+            "name": "brak ograniczen",
+            "result": {
+                "description": 1,
+                "x": [
+                    [
+                        4.666666666666667,
+                        2.333333333333333,
+                        2.3333333333333335,
+                        0,
+                        0
+                    ]
+                ]
+            }
+        }
+
+        const newstate = {
             "activeKey": "results",
             resultsActive: true,
-            resultsParsed: resultsParsed,
-            tree: result.root,
-            dim: result.dim
-        })
+            resultsParsed: resultsparsed,
+            tree: mtree,
+            dim: dim
+        }
+        console.error(newstate)
+        this.setState(newstate)
     };
 
     clearHook = () => {
