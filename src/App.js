@@ -104,7 +104,7 @@ class App extends React.Component {
             curr.push(c[i])
 
             if (false === ceq[i]) {
-                (new MyMath()).arrMultiply(curr,-1)
+                (new MyMath()).arrMultiply(curr, -1)
             }
             matrix.push(curr)
         }
@@ -121,8 +121,8 @@ class App extends React.Component {
         const pc = [[-2, -1, 0, -7], [-1, -2, 0, -7]]
         console.error("pc", pc)
 
-        const fun = this.deepcopy( this.state.fun[0] );
-        (new MyMath()).arrMultiply(fun,-1);
+        const fun = this.deepcopy(this.state.fun[0]);
+        (new MyMath()).arrMultiply(fun, -1);
 
         const constr = this.generateBnBTable(this.state.results, this.state.c, this.state.ceq);
 
@@ -135,14 +135,14 @@ class App extends React.Component {
         const result = bnb.branch_and_bound_solve(fun, constr)
 
 
-        this.addReasonableName(result.root,result.max)
+        this.addReasonableName(result.root, result.max)
 
         let resultsParsed = [[]]
-        console.error("007",result)
+        console.error("007", result)
 
-        if (result.max !== null){
-            console.error("008",result.max)
-             resultsParsed = this.createResultsParsed(this.deepcopy(result.max.result.x));
+        if (result.max !== null) {
+            console.error("008", result.max)
+            resultsParsed = this.createResultsParsed(this.deepcopy(result.max.result.x));
 
         }
         console.error("resultsParsed")
@@ -169,7 +169,7 @@ class App extends React.Component {
         ]
 
 
-        const dim = 3
+        const dim = 2
 
         const node = {
             "constraints": [],
@@ -177,24 +177,28 @@ class App extends React.Component {
             "right": null,
             "children": [],
             "solution": null,
-            "name": "brak ograniczen",
+            "name": "Wezel 1 ",
             "result": {
                 "description": 1,
                 "x": [
                     [
-                        4.666666666666667,
-                        2.333333333333333,
-                        2.3333333333333335,
+                        1,
+                        4.583,
                         0,
-                        0
+
+
                     ]
                 ]
             }
         }
-
-
-        const mtree = {
-            "constraints": [],
+        const prawy = {
+            "constraints": [
+                [
+                    1,
+                    0,
+                    4
+                ]
+            ],
             "left": null,
             "right": null,
             "children": [
@@ -210,27 +214,26 @@ class App extends React.Component {
                     "right": null,
                     "children": [],
                     "solution": null,
-                    "name": "x_1 <= 2",
+                    "name": "x_2 <= 0",
                     "result": {
                         "description": 1,
                         "x": [
                             [
-                                1,
-                                1.9999999999999998,
-                                3,
+                                6,
+                                6,
+                                0,
                                 0,
                                 0,
                                 0.9999999999999998
                             ]
                         ]
                     }
-                },
-                {
+                }, {
                     "constraints": [
                         [
-                            -1,
+                            1,
                             0,
-                            -3
+                            4
                         ]
                     ],
                     "left": null,
@@ -246,16 +249,181 @@ class App extends React.Component {
                             ],
                             "left": null,
                             "right": null,
-                            "children": [],
+                            "children": [
+                                {
+                                    "constraints": [
+                                        [
+                                            -1,
+                                            0,
+                                            -3
+                                        ]
+                                    ],
+                                    "left": null,
+                                    "right": null,
+                                    "children": [],
+                                    "solution": null,
+                                    "name": "x_2 <= 1",
+                                    "result": {
+                                        "description": 1,
+                                        "x": [
+                                            [
+                                                6,
+                                                5,
+                                                1,
+                                                0,
+                                                1.0000000000000002,
+                                                0
+                                            ]
+                                        ]
+                                    }
+                                },
+                                {
+                                    "constraints": [
+                                        [
+                                            -1,
+                                            0,
+                                            -3
+                                        ]
+                                    ],
+                                    "left": null,
+                                    "right": null,
+                                    "children": [
+                                        {
+                                            "constraints": [
+                                                [
+                                                    -1,
+                                                    0,
+                                                    -3
+                                                ]
+                                            ],
+                                            "left": null,
+                                            "right": null,
+                                            "children": [
+                                                {
+                                                    "constraints": [
+                                                        [
+                                                            -1,
+                                                            0,
+                                                            -3
+                                                        ]
+                                                    ],
+                                                    "left": null,
+                                                    "right": null,
+                                                    "children": [],
+                                                    "solution": null,
+                                                    "name": "x_2 <= 2",
+                                                    "result": {
+                                                        "description": 1,
+                                                        "x": [
+                                                            [
+                                                                6,
+                                                                4,
+                                                                2,
+                                                                0,
+                                                                1.0000000000000002,
+                                                                0
+                                                            ]
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "constraints": [
+                                                        [
+                                                            -1,
+                                                            0,
+                                                            -3
+                                                        ]
+                                                    ],
+                                                    "left": null,
+                                                    "right": null,
+                                                    "children": [],
+                                                    "solution": null,
+                                                    "name": "x_2 >= 3",
+                                                    "result": {
+                                                        "description": 5,
+                                                        "x": [
+                                                            [
+                                                                6.6,
+                                                                3.6,
+                                                                3,
+                                                                0,
+                                                                1.0000000000000002,
+                                                                0
+                                                            ]
+                                                        ]
+                                                    }
+                                                }
+                                            ],
+                                            "solution": null,
+                                            "name": "x_1 <= 4",
+                                            "result": {
+                                                "description": 1,
+                                                "x": [
+                                                    [
+                                                        6.6,
+                                                        4,
+                                                        2.6,
+                                                        0,
+                                                        1.0000000000000002,
+                                                        0
+                                                    ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "constraints": [
+                                                [
+                                                    -1,
+                                                    0,
+                                                    -3
+                                                ]
+                                            ],
+                                            "left": null,
+                                            "right": null,
+                                            "children": [],
+                                            "solution": null,
+                                            "name": "x_1 >= 5",
+                                            "result": {
+                                                "description": 5,
+                                                "x": [
+                                                    [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        1.0000000000000002,
+                                                        0
+                                                    ]
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "solution": null,
+                                    "name": "x_2 >= 2",
+                                    "result": {
+                                        "description": 1,
+                                        "x": [
+                                            [
+                                                6.6,
+                                                4.6,
+                                                2,
+                                                0,
+                                                1.0000000000000002,
+                                                0
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ],
                             "solution": null,
-                            "name": "rozw: x_1 >= dupa",
+                            "name": "x_1 <= 5",
                             "result": {
                                 "description": 1,
                                 "x": [
                                     [
+                                        6.6,
                                         5,
-                                        3,
-                                        2,
+                                        1.6,
                                         0,
                                         1.0000000000000002,
                                         0
@@ -275,14 +443,14 @@ class App extends React.Component {
                             "right": null,
                             "children": [],
                             "solution": null,
-                            "name": "rozw: x_1 >= dupa",
+                            "name": "x_1 >= 6",
                             "result": {
-                                "description": 1,
+                                "description": 5,
                                 "x": [
                                     [
-                                        5,
-                                        3,
-                                        2,
+                                        0,
+                                        0,
+                                        0,
                                         0,
                                         1.0000000000000002,
                                         0
@@ -290,36 +458,87 @@ class App extends React.Component {
                                 ]
                             }
                         }
-
                     ],
                     "solution": null,
-                    "name": "rozw: x_1 >= dupa",
+                    "name": "x_2 >= 1",
                     "result": {
                         "description": 1,
                         "x": [
                             [
-                                5,
-                                3,
-                                2,
+                                5.6,
+                                1,
+                                1,
+                                0,
+                                0,
+                                0
+                            ]
+                        ]
+                    }
+                }
+
+            ],
+            "solution": null,
+            "name": "x_1 <= 0",
+            "result": {
+                "description": 5,
+                "x": [
+                    [
+                        6.6,
+                        6,
+                        0.6,
+                        0,
+                        0,
+                        0
+                    ]
+                ]
+            }
+        }
+
+
+        const mtree = {
+            "constraints": [],
+            "left": null,
+            "right": null,
+            "children": [
+                {
+                    "constraints": [
+                        [
+                            -1,
+                            0,
+                            -3
+                        ]
+                    ],
+                    "left": null,
+                    "right": null,
+                    "children": [],
+                    "solution": null,
+                    "name": "x_1 >= 1",
+                    "result": {
+                        "description": 5,
+                        "x": [
+                            [
+                                -60400,
+                                1,
+                                7.4,
                                 0,
                                 1.0000000000000002,
                                 0
                             ]
                         ]
                     }
-                }
+                },
+                prawy
             ],
             "solution": null,
-            "name": "brak ograniczen",
+            "name": "Węzeł 1",
             "result": {
                 "description": 1,
                 "x": [
                     [
-                        4.666666666666667,
-                        2.333333333333333,
-                        2.3333333333333335,
-                        0,
-                        0
+                        -60153.8462,
+                        0.3846,
+                        9,
+
                     ]
                 ]
             }
@@ -415,33 +634,33 @@ class App extends React.Component {
         );
     }
 
-    addReasonableName(root,max) {
+    addReasonableName(root, max) {
         console.log("dupa")
         for (let i = 0; i < root.children.length; i++) {
-            this.addReasonableName(root.children[i],max)
+            this.addReasonableName(root.children[i], max)
         }
         let name = ""
-        if ( root === max){
+        if (root === max) {
             name += "rozw: "
         }
-        if (root.constraints.length === 0 ){
+        if (root.constraints.length === 0) {
             name += "brak ograniczen"
         } else {
-            const last_constraint = root.constraints[root.constraints.length-1];
+            const last_constraint = root.constraints[root.constraints.length - 1];
             let foundIndex = -1
             let gt = false
             for (let i = 0; i < last_constraint.length; i++) {
-                if (last_constraint[i] === -1){
+                if (last_constraint[i] === -1) {
                     foundIndex = i
                     gt = true
-                }else if ( last_constraint[i] === 1 ){
+                } else if (last_constraint[i] === 1) {
                     foundIndex = i
                     gt = false
                 }
             }
             const sign = gt ? ">=" : "<="
             const value = gt ? -1 : 1
-            name += `x_${foundIndex+1} ${sign} ${last_constraint[last_constraint.length-1] * value}`
+            name += `x_${foundIndex + 1} ${sign} ${last_constraint[last_constraint.length - 1] * value}`
         }
         root.name = name
     }
