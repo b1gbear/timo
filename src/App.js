@@ -202,6 +202,8 @@ class App extends React.Component {
             "left": null,
             "right": null,
             "children": [
+
+
                 {
                     "constraints": [
                         [
@@ -212,33 +214,35 @@ class App extends React.Component {
                     ],
                     "left": null,
                     "right": null,
-                    "children": [],
-                    "solution": null,
-                    "name": "x_2 <= 0",
-                    "result": {
-                        "description": 1,
-                        "x": [
-                            [
-                                6,
-                                6,
-                                0,
-                                0,
-                                0,
-                                0.9999999999999998
-                            ]
-                        ]
-                    }
-                }, {
-                    "constraints": [
-                        [
-                            1,
-                            0,
-                            4
-                        ]
-                    ],
-                    "left": null,
-                    "right": null,
                     "children": [
+
+                        {
+                            "constraints": [
+                                [
+                                    -1,
+                                    0,
+                                    -3
+                                ]
+                            ],
+                            "left": null,
+                            "right": null,
+                            "children": [],
+                            "solution": null,
+                            "name": "x_1 >= 6",
+                            "result": {
+                                "description": 5,
+                                "x": [
+                                    [
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        1.0000000000000002,
+                                        0
+                                    ]
+                                ]
+                            }
+                        },
                         {
                             "constraints": [
                                 [
@@ -260,34 +264,35 @@ class App extends React.Component {
                                     ],
                                     "left": null,
                                     "right": null,
-                                    "children": [],
-                                    "solution": null,
-                                    "name": "x_2 <= 1",
-                                    "result": {
-                                        "description": 1,
-                                        "x": [
-                                            [
-                                                6,
-                                                5,
-                                                1,
-                                                0,
-                                                1.0000000000000002,
-                                                0
-                                            ]
-                                        ]
-                                    }
-                                },
-                                {
-                                    "constraints": [
-                                        [
-                                            -1,
-                                            0,
-                                            -3
-                                        ]
-                                    ],
-                                    "left": null,
-                                    "right": null,
                                     "children": [
+
+                                        {
+                                            "constraints": [
+                                                [
+                                                    -1,
+                                                    0,
+                                                    -3
+                                                ]
+                                            ],
+                                            "left": null,
+                                            "right": null,
+                                            "children": [],
+                                            "solution": null,
+                                            "name": "x_1 >= 5",
+                                            "result": {
+                                                "description": 5,
+                                                "x": [
+                                                    [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        1.0000000000000002,
+                                                        0
+                                                    ]
+                                                ]
+                                            }
+                                        },
                                         {
                                             "constraints": [
                                                 [
@@ -369,33 +374,6 @@ class App extends React.Component {
                                                     ]
                                                 ]
                                             }
-                                        },
-                                        {
-                                            "constraints": [
-                                                [
-                                                    -1,
-                                                    0,
-                                                    -3
-                                                ]
-                                            ],
-                                            "left": null,
-                                            "right": null,
-                                            "children": [],
-                                            "solution": null,
-                                            "name": "x_1 >= 5",
-                                            "result": {
-                                                "description": 5,
-                                                "x": [
-                                                    [
-                                                        0,
-                                                        0,
-                                                        0,
-                                                        0,
-                                                        1.0000000000000002,
-                                                        0
-                                                    ]
-                                                ]
-                                            }
                                         }
                                     ],
                                     "solution": null,
@@ -413,7 +391,35 @@ class App extends React.Component {
                                             ]
                                         ]
                                     }
+                                },
+                                {
+                                    "constraints": [
+                                        [
+                                            -1,
+                                            0,
+                                            -3
+                                        ]
+                                    ],
+                                    "left": null,
+                                    "right": null,
+                                    "children": [],
+                                    "solution": null,
+                                    "name": "x_2 <= 1",
+                                    "result": {
+                                        "description": 1,
+                                        "x": [
+                                            [
+                                                6,
+                                                5,
+                                                1,
+                                                0,
+                                                1.0000000000000002,
+                                                0
+                                            ]
+                                        ]
+                                    }
                                 }
+
                             ],
                             "solution": null,
                             "name": "x_1 <= 5",
@@ -424,33 +430,6 @@ class App extends React.Component {
                                         6.6,
                                         5,
                                         1.6,
-                                        0,
-                                        1.0000000000000002,
-                                        0
-                                    ]
-                                ]
-                            }
-                        },
-                        {
-                            "constraints": [
-                                [
-                                    -1,
-                                    0,
-                                    -3
-                                ]
-                            ],
-                            "left": null,
-                            "right": null,
-                            "children": [],
-                            "solution": null,
-                            "name": "x_1 >= 6",
-                            "result": {
-                                "description": 5,
-                                "x": [
-                                    [
-                                        0,
-                                        0,
-                                        0,
                                         0,
                                         1.0000000000000002,
                                         0
@@ -474,7 +453,35 @@ class App extends React.Component {
                             ]
                         ]
                     }
+                },
+                {
+                    "constraints": [
+                        [
+                            1,
+                            0,
+                            4
+                        ]
+                    ],
+                    "left": null,
+                    "right": null,
+                    "children": [],
+                    "solution": null,
+                    "name": "x_2 <= 0",
+                    "result": {
+                        "description": 1,
+                        "x": [
+                            [
+                                6,
+                                6,
+                                0,
+                                0,
+                                0,
+                                0.9999999999999998
+                            ]
+                        ]
+                    }
                 }
+
 
             ],
             "solution": null,
